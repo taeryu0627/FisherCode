@@ -12,22 +12,23 @@ public class Stage1Script {
 	private void loadDefaultScript() {
 		script.add(new Script(
 			"Stage1_01",	
-			"공문서형",
+			"피싱 도메인 유형",
 			true,
-			"[Web발신]\n[민원24] 식품불량신고처리결과\n접수결과고시서가 전달되었습니다.\n보기: http://y.hnast"
+			"[Web발신]\n"
+			+ "[SKT 유심 재고 도착알림]\n"
+			+ "고객님이 예약하신 USIM이 대리점에\n"
+			+ "입고 되었습니다. 방문 전 본인확일을 위해\n"
+			+ "아래 URL을 눌러 본인 확인을 해주세요\n"
+			+ "http://kb-check.xyz"
 		));
 		script.add(new Script(	
 			"Stage1_02",
-			"금융사기형",
-			true,
-			"[Web발신]\\n[국민은행] 본인 계좌에서 비정상 거래가 감지되었습니다.\\n확인 즉시 로그인: http://kb-check.kr"
+			"정상 문자 유형",
+			false,
+			"[성남시청]1월 30일 확진자 80명 발생.\n"
+			+ "손씻기, 주기적 환기 등 개인방역수칙 준수바랍니다."
+			+ "corona.seongnam.go.kr"
 		));
-		script.add(new Script(
-			"Stage1_03",
-            "택배",
-            false,
-            "[CJ대한통운]\n상품이 금일 배송 예정입니다.\n운송장번호: 123-4567-8901"
-            ));
 	}
 	
 	public Script getRandomScript() {
