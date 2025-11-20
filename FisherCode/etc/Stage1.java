@@ -107,8 +107,8 @@ public class Stage1 extends JFrame{
                 " - 주로 신뢰할 수 있는 도메인 .com, .org\n" +
                 " - 신뢰할 수 없는 생소한 도메인 .xyz, .biz, .info .co" +
                 "유사 도메인 링크를 조심해야 한다." +
-                "google.com -> g00gle.com" +
-                "paypal.com -> paypaI.com"
+                " - google.com -> g00gle.com" +
+                " - paypal.com -> paypaI.com"
         );
         memoText.setFont(new Font("맑은 고딕", Font.PLAIN, 8));
         memoText.setOpaque(false);
