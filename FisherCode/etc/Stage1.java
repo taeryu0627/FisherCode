@@ -12,6 +12,9 @@ public class Stage1 extends JFrame{
     private ImageIcon memoImg;
     private ImageIcon btnYesImg;
     private ImageIcon btnNoImg;
+    //private imageIcon btnYesHoverimg;
+    //private imageIcon btnNoHoverimg;
+
     private JLabel btnYes;
     private JLabel btnNo;
     
@@ -21,7 +24,7 @@ public class Stage1 extends JFrame{
 		setSize(900,500);
 		setLocationRelativeTo(null);
 				
-        JPanel mainPanel = new JPanel(new GridLayout(1, 3, 10, 0));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 10, 0));
         add(mainPanel);
         
         /// ------------------------
@@ -59,26 +62,14 @@ public class Stage1 extends JFrame{
         receiveMsg.setOpaque(true);
         receiveMsg.setBackground(Color.WHITE);
         receiveMsg.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
-        receiveMsg.setBounds(10, 20, 130, 60);
+        receiveMsg.setBounds(10, 30, 130, 100);
         receiveMsg.setFont(new Font("맑은 고딕", Font.PLAIN, 8));
 
         chatPanel.add(receiveMsg);
         //
         loadRandomScript();
         
-        // 송신 메시지 (오른쪽)
-        JTextArea sendMsg = new JTextArea("일단 남겨둔 텍스트");
-        sendMsg.setLineWrap(true);
-        sendMsg.setWrapStyleWord(true);
-        sendMsg.setEditable(false);
-        sendMsg.setOpaque(true);
-        sendMsg.setBackground(new Color(135, 206, 250));
-        sendMsg.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
-        sendMsg.setBounds(40, 90, 170, 25);
-        sendMsg.setFont(new Font("맑은 고딕", Font.PLAIN, 8));
-
         chatPanel.add(receiveMsg);
-        chatPanel.add(sendMsg);
         
         /// -------------
         /// 오른쪽 메모 화면
@@ -102,18 +93,23 @@ public class Stage1 extends JFrame{
 
         // 메모 내용
         JTextArea memoText = new JTextArea(
-                "신뢰할 수 없는 유형의 URL 접속을 주의해야 한다\n" +
-                "알 수 없는 최상위 도메인 링크를 조심해야 한다." +
-                " - 주로 신뢰할 수 있는 도메인 .com, .org\n" +
-                " - 신뢰할 수 없는 생소한 도메인 .xyz, .biz, .info .co" +
-                "유사 도메인 링크를 조심해야 한다." +
-                " - google.com -> g00gle.com" +
-                " - paypal.com -> paypaI.com"
+                "신뢰할 수 없는 유형의 URL\n"
+                + "접속을 주의해야 한다\n"
+                + "1. 알 수 없는 최상위 도메인 링크를 조심해야 한다\n."
+                + " - 주로 신뢰할 수 있는\n"
+                + "도메인\n"
+                + ".com, .org\n"
+                + " - 신뢰할 수 없는 생소한\n"
+                + "도메인\n"
+                + ".xyz, .biz, .info .co\n"
+                + "2. 유사 도메인 링크를 조심해야 한다.\n"
+                + " - google.com -> g00gle.com\n"
+                + " - paypal.com -> paypaI.com\n"
         );
-        memoText.setFont(new Font("맑은 고딕", Font.PLAIN, 8));
+        memoText.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
         memoText.setOpaque(false);
         memoText.setEditable(false);
-        memoText.setBounds(80, 78, 200, 300);
+        memoText.setBounds(80, 100, 200, 300);
         memoPanel.add(memoText);
         
         ///
@@ -125,6 +121,8 @@ public class Stage1 extends JFrame{
         // 임시 이미지
         btnYesImg = new ImageIcon("src/images/스미싱 맞음.png");
         btnNoImg = new ImageIcon("src/images/스미싱 아님.png");
+        //btnYesHoverImg = new ImageIcon("src/images/.png");
+        //btnNoHoverImg = new ImageIcon("src/images/.png"); 
         
         // YES 버튼
         btnYes = new JLabel(btnYesImg);
