@@ -5,51 +5,50 @@ import java.awt.event.*;
 
 public class Stage1 extends JFrame{
     private Stage1Script stage1Script = new Stage1Script();
-    private Script currentScript;   // 현재 문제
+    private Script currentScript;
     private JTextArea receiveMsg;    
+    
+    private ImageIcon phoneImg;
+    private ImageIcon memoImg;
+    private ImageIcon btnYesImg;
+    private ImageIcon btnNoImg;
+    private JLabel btnYes;
+    private JLabel btnNo;
     
 	public Stage1() {
 		setTitle("피셔코드 메인 GUI 구상");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800,500);
+		setSize(900,500);
 		setLocationRelativeTo(null);
-		
-        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 10, 0));
-        mainPanel.setBackground(Color.LIGHT_GRAY);
+				
+        JPanel mainPanel = new JPanel(new GridLayout(1, 3, 10, 0));
         add(mainPanel);
         
         /// ------------------------
-        /// 왼쪽 폰 화면 -> 나중에 이미지로
+        /// 왼쪽 폰 화면
         /// ------------------------
+        
+        phoneImg = new ImageIcon("src/images/경찰청 휴대폰.png");
+
+        int phoneWidth = 500; 
+        int phoneHeight = 500; 
+
         JPanel phonePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                int panelWidth = getWidth();
-                int panelHeight = getHeight();
 
-                int phoneWidth = 260;
-                int phoneHeight = 440;
-
-                int x = (panelWidth - phoneWidth) / 2;
-                int y = (panelHeight - phoneHeight) / 2;
-
-                g.setColor(Color.BLACK);
-                g.fillRoundRect(x, y, phoneWidth, phoneHeight, 40, 40);
-
-                g.setColor(Color.LIGHT_GRAY);
-                g.fillRoundRect(x + 20, y + 30, phoneWidth - 40, phoneHeight - 60, 20, 20);
+                g.drawImage(phoneImg.getImage(), -20, -20, phoneWidth, phoneHeight, this);
             }
         };
         phonePanel.setLayout(null);
-        phonePanel.setBackground(Color.WHITE);
         mainPanel.add(phonePanel);
         
         // 대화 패널
         JPanel chatPanel = new JPanel();
         chatPanel.setLayout(null);
         chatPanel.setOpaque(false);
-        chatPanel.setBounds(90, 60, 220, 380);
+        chatPanel.setBounds(130, 100, 190, 280);
         phonePanel.add(chatPanel);
 
         // 수신 메시지 (왼쪽)
@@ -60,7 +59,7 @@ public class Stage1 extends JFrame{
         receiveMsg.setOpaque(true);
         receiveMsg.setBackground(Color.WHITE);
         receiveMsg.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
-        receiveMsg.setBounds(10, 20, 180, 60);
+        receiveMsg.setBounds(10, 20, 130, 60);
         receiveMsg.setFont(new Font("맑은 고딕", Font.PLAIN, 8));
 
         chatPanel.add(receiveMsg);
@@ -68,7 +67,7 @@ public class Stage1 extends JFrame{
         loadRandomScript();
         
         // 송신 메시지 (오른쪽)
-        JTextArea sendMsg = new JTextArea("내 골반이 멈추지 않은 탓일까T.T");
+        JTextArea sendMsg = new JTextArea("일단 남겨둔 텍스트");
         sendMsg.setLineWrap(true);
         sendMsg.setWrapStyleWord(true);
         sendMsg.setEditable(false);
@@ -84,57 +83,74 @@ public class Stage1 extends JFrame{
         /// -------------
         /// 오른쪽 메모 화면
         /// -------------
-        JPanel memoPanel = new JPanel();
-        memoPanel.setLayout(new BorderLayout(10, 10));
-        memoPanel.setBackground(Color.WHITE);
-        memoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
+        memoImg = new ImageIcon("src/images/메모장 이미지.png");
+
+        int memoWidth = 286; 
+        int memoHeight = 400; 
+        
+        JPanel memoPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                g.drawImage(memoImg.getImage(), 20, 30, memoWidth, memoHeight, this);
+            }
+        };
+        memoPanel.setLayout(null);
         mainPanel.add(memoPanel);
 
-        // 메모 내용 (체크박스 + 버튼)
-        JPanel checklistPanel = new JPanel();
-        checklistPanel.setLayout(new BoxLayout(checklistPanel, BoxLayout.Y_AXIS));
-        checklistPanel.setBackground(new Color(245, 245, 245));
-        checklistPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-
-        JCheckBox chk1 = new JCheckBox("1. 출처가 불분명한 링크는 클릭하지 않기");
-        JCheckBox chk2 = new JCheckBox("2. 앱 다운로드는 공식 앱 스토어만 이용하기");
-        chk1.setSelected(true);
-
-        checklistPanel.add(Box.createVerticalStrut(10));
-        checklistPanel.add(chk1);
-        checklistPanel.add(Box.createVerticalStrut(5));
-        checklistPanel.add(chk2);
-        checklistPanel.add(Box.createVerticalGlue());
-
-        memoPanel.add(checklistPanel, BorderLayout.CENTER);
+        // 메모 내용
+        JTextArea memoText = new JTextArea(
+                "신뢰할 수 없는 유형의 URL 접속을 주의해야 한다\n" +
+                "알 수 없는 최상위 도메인 링크를 조심해야 한다." +
+                " - 주로 신뢰할 수 있는 도메인 .com, .org\n" +
+                " - 신뢰할 수 없는 생소한 도메인 .xyz, .biz, .info .co" +
+                "유사 도메인 링크를 조심해야 한다." +
+                "google.com -> g00gle.com" +
+                "paypal.com -> paypaI.com"
+        );
+        memoText.setFont(new Font("맑은 고딕", Font.PLAIN, 8));
+        memoText.setOpaque(false);
+        memoText.setEditable(false);
+        memoText.setBounds(80, 78, 200, 300);
+        memoPanel.add(memoText);
         
-        // 스미싱 확인 버튼
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        JButton btnYes = new JButton("스미싱이 맞습니다");
-        JButton btnNo = new JButton("스미싱이 아닙니다");
+        ///
+        /// 스미싱 확인 버튼
+        /// 
+        JPanel buttonPanel = new JPanel(null);  
+        buttonPanel.setOpaque(false);
 
-        btnYes.setBackground(Color.DARK_GRAY);
-        btnYes.setForeground(Color.WHITE);
-        btnNo.setBackground(Color.DARK_GRAY);
-        btnNo.setForeground(Color.WHITE);
+        // 임시 이미지
+        btnYesImg = new ImageIcon("src/images/스미싱 맞음.png");
+        btnNoImg = new ImageIcon("src/images/스미싱 아님.png");
+        
+        // YES 버튼
+        btnYes = new JLabel(btnYesImg);
+        btnYes.setBounds(310, 260, 85, 85);
+        btnYes.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        memoPanel.add(btnYes);
 
-        buttonPanel.add(btnYes);
-        buttonPanel.add(btnNo);
+        // NO 버튼
+        btnNo = new JLabel(btnNoImg);
+        btnNo.setBounds(310, 360, 85, 85);
+        btnNo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        memoPanel.add(btnNo);
 
-        memoPanel.add(buttonPanel, BorderLayout.SOUTH);
         
         /// ---------
         /// 버튼 이벤트 (정답 or 오답)
         /// ---------
-        btnYes.addActionListener(new ActionListener() {
+        btnYes.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent  e) {
             	checkAnswer(true);
             }
         });
-        btnNo.addActionListener(new ActionListener() {
+        btnNo.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent  e) {
             	checkAnswer(false);
             }
         });
@@ -157,7 +173,7 @@ public class Stage1 extends JFrame{
             Object[] options = {"다음 문제"};
             int choice = JOptionPane.showOptionDialog(
                     this,
-                    "정확한 판단입니",
+                    "정확한 판단입니다",
                     "정답입니다!",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
