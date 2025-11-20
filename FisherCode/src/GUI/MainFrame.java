@@ -1,110 +1,121 @@
 package GUI;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
+import Models.Script;
+import Models.Stage1Script;
 
 public class MainFrame extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private Script currentScript;
+    private Stage1Script stage1 = new Stage1Script();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainFrame().setVisible(true));
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    // ★ PhonePanel을 필드로 선언
+    private PhonePanel phonePanel;
 
-	/**
-	 * Create the frame.
-	 */
-	public MainFrame() {
-        setTitle("피셔 코드 시작 GUI 구상");
+    public MainFrame() {
+        setTitle("보이스피싱 예방 화면");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 500);
+        setSize(1300, 700);
         setLocationRelativeTo(null);
 
-        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 10, 0));
-        mainPanel.setBackground(Color.LIGHT_GRAY);
-        getContentPane().add(mainPanel);
+        ((JComponent) getContentPane()).setBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        );
 
-        /// ------------------------
-        /// 왼쪽 폰 화면 -> 나중에 이미지로
-        /// ------------------------
-        JPanel phonePanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                int panelWidth = getWidth();
-                int panelHeight = getHeight();
+        setLayout(new BorderLayout(20, 0));
 
-                int phoneWidth = 260;
-                int phoneHeight = 440;
-                int x = (panelWidth - phoneWidth) / 2;
-                int y = (panelHeight - phoneHeight) / 2;
+        // 버튼 세팅
+        mainDesign();
 
-                g.setColor(Color.BLACK);
-                g.fillRoundRect(x, y, phoneWidth, phoneHeight, 40, 40);
+        // ★ 첫 문제 랜덤 출제
+        loadRandomScript();
 
-                g.setColor(Color.LIGHT_GRAY);
-                g.fillRoundRect(x + 20, y + 30, phoneWidth - 40, phoneHeight - 60, 20, 20);
+        setVisible(true);
+    }
+
+    private void mainDesign() {
+        // 중앙 : 폰 + 노트
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 30, 0));
+
+        // ★ 여기서 PhonePanel을 필드에 할당
+        phonePanel = new PhonePanel("/resources/PhoneImg_2.png");
+        centerPanel.add(phonePanel);
+
+        centerPanel.add(new NotePanel("/resources/NoteImg.png"));
+        add(centerPanel, BorderLayout.CENTER);
+        
+        // 우측 아래 : 도장 버튼 두 개
+        ButtonPanel yesBtn = new ButtonPanel(true);
+        yesBtn.addActionListener(e -> checkAnswer(true));
+
+        ButtonPanel noBtn  = new ButtonPanel(false);
+        noBtn.addActionListener(e -> checkAnswer(false));
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setOpaque(false);
+        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
+        btnPanel.add(yesBtn);
+        btnPanel.add(Box.createVerticalStrut(20)); //여백 추가
+        btnPanel.add(noBtn);
+
+        JPanel eastWrapper = new JPanel(new BorderLayout());
+        eastWrapper.setOpaque(false);
+        eastWrapper.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        eastWrapper.add(btnPanel, BorderLayout.SOUTH);
+        add(eastWrapper, BorderLayout.EAST);
+    }
+
+    /// ------------ 스미싱 여부 판단 ------------
+    private void checkAnswer(boolean userAnswer) {
+        boolean correct = (userAnswer == currentScript.isScam());
+
+        if (correct) {
+            Object[] options = {"다음 문제"};
+            int choice = JOptionPane.showOptionDialog(
+                    this,
+                    "정확한 판단입니다",
+                    "정답입니다!",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+
+            if (choice == 0) {
+                loadRandomScript(); // ★ 다음 랜덤 문제
             }
-        };
-        phonePanel.setLayout(null);
-        phonePanel.setBackground(Color.WHITE);
-        mainPanel.add(phonePanel);
 
-        // 피셔 코드 제목
-        JLabel title = new JLabel("피셔 코드", SwingConstants.CENTER);
-        title.setFont(new Font("맑은 고딕", Font.BOLD, 24));
-        title.setForeground(Color.BLACK);
-        title.setBounds(90, 180, 220, 40);
-        phonePanel.add(title);
+        } else {
+            Object[] options = {"재도전"};
+            JOptionPane.showOptionDialog(
+                    this,
+                    "다시 생각해보세요",
+                    "틀렸습니다!",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+        }
+    }
 
-        // 시작 버튼
-        JButton startBtn = new JButton("start");
-        startBtn.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-        startBtn.setBackground(Color.DARK_GRAY);
-        startBtn.setForeground(Color.LIGHT_GRAY);
-        startBtn.setFocusPainted(false);
-        startBtn.setBounds(147, 300, 100, 40);
-        phonePanel.add(startBtn);
+    /// ------------ 랜덤 시나리오 함수 ------------
+    private void loadRandomScript() {
+        // ★ Stage1Script에서 랜덤 Script 하나 받아오기
+        currentScript = stage1.getRandomScript();
 
-        /// -------------------
-        /// 오른쪽 메모 화면 (빈화면)
-        /// -------------------
-        JPanel memoPanel = new JPanel();
-        memoPanel.setLayout(new BorderLayout(10, 10));
-        memoPanel.setBackground(Color.WHITE);
-        memoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
-        JPanel checklistPanel = new JPanel();
-        checklistPanel.setBackground(new Color(245, 245, 245));
-        checklistPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        memoPanel.add(checklistPanel, BorderLayout.CENTER);
-        
-        mainPanel.add(memoPanel);
-        
-        // 버튼 이벤트 (게임 시작)
-        startBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-               // new Stage1().setVisible(true); // mainGui 열기
-            }
-        });
-	}
+        // ★ PhonePanel에 문자 내용/답장 세팅
+        phonePanel.setRecvMessage(currentScript.getMessage());
+        phonePanel.setReplyMessage("링크에 들어가도 되나요?");
 
+        // 필요하면 NotePanel도 여기서 같이 업데이트 가능
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(MainFrame::new);
+    }
 }
