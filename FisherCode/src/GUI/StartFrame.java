@@ -42,7 +42,7 @@ public class StartFrame extends JFrame {
             startButton = new JLabel(new ImageIcon(scaledButton));
             
             int initialX = (getWidth() - BUTTON_WIDTH) / 2;
-            int initialY = 450; 
+            int initialY = 500; 
             startButton.setBounds(initialX, initialY, BUTTON_WIDTH, BUTTON_HEIGHT);
             startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
             backgroundPanel.add(startButton);
