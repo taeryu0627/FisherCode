@@ -52,10 +52,10 @@ public class DialogFrame extends JFrame {
 
         // 화살표 버튼
         ImageIcon arrowIcon = new ImageIcon("src/images/Arrow.png");
-        Image scaledArrow = arrowIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        Image scaledArrow = arrowIcon.getImage().getScaledInstance(80, 60, Image.SCALE_SMOOTH);
 
         nextArrow = new JLabel(new ImageIcon(scaledArrow));
-        nextArrow.setBounds(1120, 550, 60, 60);  
+        nextArrow.setBounds(1100, 550, 80, 60);  
         nextArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
         nextArrow.setVisible(false); // 대사 다 끝나면 보이게
         backgroundPanel.add(nextArrow);    
@@ -80,7 +80,6 @@ public class DialogFrame extends JFrame {
         textArea = new JTextArea();
         textArea.setFont(new Font("맑은 고딕", Font.BOLD, 24));
         textArea.setForeground(Color.WHITE);
-        //textArea.setOpaque(true);
         textArea.setBackground(new Color(30, 120, 200));
         textArea.setBounds(100, 430, 1090, 200);
         textArea.setLineWrap(true);
