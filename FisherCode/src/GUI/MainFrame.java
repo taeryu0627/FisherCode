@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 import Models.Script;
-import Models.Stage1Script;
+import Models.ScriptList;
 
 public class MainFrame extends JFrame {
 
     private Script currentScript;
-    private Stage1Script stage1 = new Stage1Script();
+    private ScriptList stage1 = new ScriptList();
 
     // ★ PhonePanel을 필드로 선언
     private PhonePanel phonePanel;
