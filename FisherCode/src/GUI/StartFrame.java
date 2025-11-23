@@ -21,9 +21,9 @@ public class StartFrame extends JFrame {
         setSize(1300, 700);
         setLocationRelativeTo(null); 
 
-        backgroundImage = new ImageIcon("src/images/StartScreen1.png").getImage();
-        startButtonIcon = new ImageIcon("src/images/StartBtn.png");
-        startButtonHoverIcon = new ImageIcon("src/images/StartBtn_hover.png"); 
+        backgroundImage = new ImageIcon("/resources/StartScreen1.png").getImage();
+        startButtonIcon = new ImageIcon("/resources/StartBtn.png");
+        startButtonHoverIcon = new ImageIcon("/resources/StartBtn_hover.png"); 
 
         JPanel backgroundPanel = new JPanel() {
             @Override
