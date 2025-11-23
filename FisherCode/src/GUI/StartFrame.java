@@ -21,7 +21,7 @@ public class StartFrame extends JFrame {
         setSize(1300, 700);
         setLocationRelativeTo(null); 
 
-        backgroundImage = new ImageIcon("/resources/StartScreen1.png").getImage();
+        backgroundImage = new ImageIcon("/resources/background/StartScreen1.png").getImage();
         startButtonIcon = new ImageIcon("/resources/StartBtn.png");
         startButtonHoverIcon = new ImageIcon("/resources/StartBtn_hover.png"); 
 
