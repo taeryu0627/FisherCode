@@ -51,7 +51,7 @@ public class DialogFrame extends JFrame {
         add(backgroundPanel);
 
         // 화살표 버튼
-        ImageIcon arrowIcon = new ImageIcon("src/images/Arrow.png");
+        ImageIcon arrowIcon = new ImageIcon("/resources/Arrow.png");
         Image scaledArrow = arrowIcon.getImage().getScaledInstance(80, 60, Image.SCALE_SMOOTH);
 
         nextArrow = new JLabel(new ImageIcon(scaledArrow));
