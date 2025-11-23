@@ -33,8 +33,8 @@ public class DialogFrame extends JFrame {
         setSize(1300, 700);
         setLocationRelativeTo(null);
 
-        backgroundImage1 = new ImageIcon("src/images/Dialog1.png").getImage();
-        backgroundImage2 = new ImageIcon("src/images/Dialog2.png").getImage();
+        backgroundImage1 = new ImageIcon("/resources/background/Dialog1.png").getImage();
+        backgroundImage2 = new ImageIcon("/resources/background/Dialog2.png").getImage();
 
         JPanel backgroundPanel = new JPanel() {
             @Override
@@ -51,7 +51,7 @@ public class DialogFrame extends JFrame {
         add(backgroundPanel);
 
         // 화살표 버튼
-        ImageIcon arrowIcon = new ImageIcon("src/images/Arrow.png");
+        ImageIcon arrowIcon = new ImageIcon("/resources/Arrow.png");
         Image scaledArrow = arrowIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 
         nextArrow = new JLabel(new ImageIcon(scaledArrow));
