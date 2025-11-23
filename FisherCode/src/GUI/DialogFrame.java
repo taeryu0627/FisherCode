@@ -33,8 +33,8 @@ public class DialogFrame extends JFrame {
         setSize(1300, 700);
         setLocationRelativeTo(null);
 
-        backgroundImage1 = new ImageIcon("/resources/Dialog1.png").getImage();
-        backgroundImage2 = new ImageIcon("/resources/Dialog2.png").getImage();
+        backgroundImage1 = new ImageIcon("/resources/background/Dialog1.png").getImage();
+        backgroundImage2 = new ImageIcon("/resources/background/Dialog2.png").getImage();
 
         JPanel backgroundPanel = new JPanel() {
             @Override
