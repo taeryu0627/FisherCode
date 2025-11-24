@@ -5,73 +5,119 @@ import java.awt.*;
 
 import Models.Script;
 import Models.Stage1Script;
+import GUI.ResultPanel;
 
 public class MainFrame extends JFrame {
 
+    // -----------------------
+    //  Fields
+    // -----------------------
     private Script currentScript;
-    private Stage1Script stage1 = new Stage1Script();
+    private final Stage1Script stage1 = new Stage1Script();
 
-    // ★ PhonePanel을 필드로 선언
-    private PhonePanel phonePanel;
+    private PhonePanel phonePanel;  // 중앙 폰 UI 연결용
 
+    private int correctCount = 0;   // 정답 수
+    private int wrongCount = 0;     // 오답 수
+    private JLabel scoreLabel;
+
+
+    // -----------------------
+    //  Constructor
+    // -----------------------
     public MainFrame() {
         setTitle("보이스피싱 예방 화면");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1300, 700);
         setLocationRelativeTo(null);
 
+        // 프레임 기본 여백
         ((JComponent) getContentPane()).setBorder(
                 BorderFactory.createEmptyBorder(20, 20, 20, 20)
         );
 
         setLayout(new BorderLayout(20, 0));
 
-        // 버튼 세팅
-        mainDesign();
-
-        // ★ 첫 문제 랜덤 출제
-        loadRandomScript();
+        mainDesign();       // 첫 화면 구성
+        loadRandomScript(); // 첫 문제 로딩
 
         setVisible(true);
     }
 
-    private void mainDesign() {
-        // 중앙 : 폰 + 노트
-        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 30, 0));
 
-        // ★ 여기서 PhonePanel을 필드에 할당
+    // -----------------------
+    //  메인 UI 구성
+    // -----------------------
+    private void mainDesign() {
+
+        // 배경 패널 적용
+        BackgroundPanel mainPanel =
+                new BackgroundPanel("/resources/background/Dialog1.png");
+        mainPanel.setLayout(new BorderLayout(20, 20));
+        setContentPane(mainPanel);
+        
+        scoreLabel = new JLabel("맞춘 문제: 0개");
+        scoreLabel.setFont(new Font("맑은 고딕", Font.BOLD, 22));
+        scoreLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);  // ⭐ 오른쪽 정렬
+
+        mainPanel.add(scoreLabel, BorderLayout.NORTH);
+
+        // 중앙(폰 + 노트)
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 30, 0));
+        centerPanel.setOpaque(false);
+
         phonePanel = new PhonePanel("/resources/PhoneImg_2.png");
         centerPanel.add(phonePanel);
 
         centerPanel.add(new NotePanel("/resources/NoteImg.png"));
-        add(centerPanel, BorderLayout.CENTER);
-        
-        // 우측 아래 : 도장 버튼 두 개
+
+        // 오른쪽 버튼 영역
+        JPanel buttonPanel = createButtonPanel();
+
+        // 배경 패널에 추가
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.EAST);
+    }
+
+
+    // -----------------------
+    //  YES / NO 버튼 패널
+    // -----------------------
+    private JPanel createButtonPanel() {
+
         ButtonPanel yesBtn = new ButtonPanel(true);
         yesBtn.addActionListener(e -> checkAnswer(true));
 
-        ButtonPanel noBtn  = new ButtonPanel(false);
+        ButtonPanel noBtn = new ButtonPanel(false);
         noBtn.addActionListener(e -> checkAnswer(false));
 
         JPanel btnPanel = new JPanel();
         btnPanel.setOpaque(false);
         btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
         btnPanel.add(yesBtn);
-        btnPanel.add(Box.createVerticalStrut(20)); //여백 추가
+        btnPanel.add(Box.createVerticalStrut(20)); // 간격
         btnPanel.add(noBtn);
 
-        JPanel eastWrapper = new JPanel(new BorderLayout());
-        eastWrapper.setOpaque(false);
-        eastWrapper.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-        eastWrapper.add(btnPanel, BorderLayout.SOUTH);
-        add(eastWrapper, BorderLayout.EAST);
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.setOpaque(false);
+        wrapper.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        wrapper.add(btnPanel, BorderLayout.SOUTH);
+
+        return wrapper;
     }
 
-    /// ------------ 스미싱 여부 판단 ------------
+
+    // -----------------------
+    //  문제 정답 체크
+    // -----------------------
     private void checkAnswer(boolean userAnswer) {
         boolean correct = (userAnswer == currentScript.isScam());
 
         if (correct) {
+        	correctCount++;
+        	updateScoreLabel();
+
             Object[] options = {"다음 문제"};
             int choice = JOptionPane.showOptionDialog(
                     this,
@@ -85,14 +131,22 @@ public class MainFrame extends JFrame {
             );
 
             if (choice == 0) {
-                loadRandomScript(); // ★ 다음 랜덤 문제
+                loadRandomScript();
             }
 
         } else {
+            wrongCount++;
+
+            // 3회 틀리면 바로 결과 화면으로 이동
+            if (wrongCount >= 3) {
+                showResultPanel();
+                return;
+            }
+
             Object[] options = {"재도전"};
             JOptionPane.showOptionDialog(
                     this,
-                    "다시 생각해보세요",
+                    "다시 생각해보세요 (" + wrongCount + "/3)",
                     "틀렸습니다!",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.ERROR_MESSAGE,
@@ -103,18 +157,65 @@ public class MainFrame extends JFrame {
         }
     }
 
-    /// ------------ 랜덤 시나리오 함수 ------------
-    private void loadRandomScript() {
-        // ★ Stage1Script에서 랜덤 Script 하나 받아오기
-        currentScript = stage1.getRandomScript();
-
-        // ★ PhonePanel에 문자 내용/답장 세팅
-        phonePanel.setRecvMessage(currentScript.getMessage());
-        phonePanel.setReplyMessage("링크에 들어가도 되나요?");
-
-        // 필요하면 NotePanel도 여기서 같이 업데이트 가능
+    private void updateScoreLabel() {
+        if (scoreLabel != null) {
+            scoreLabel.setText("맞춘 문제: " + correctCount + "개");
+        }
     }
 
+    // -----------------------
+    //  랜덤 시나리오 로딩
+    // -----------------------
+    private void loadRandomScript() {
+
+        currentScript = stage1.getRandomScript();
+
+        phonePanel.setRecvMessage(currentScript.getMessage());
+        phonePanel.setReplyMessage("링크에 들어가도 되나요?");
+    }
+
+
+    // -----------------------
+    //  결과 화면 전환
+    // -----------------------
+    private void showResultPanel() {
+
+        ResultPanel resultPanel =
+                new ResultPanel(correctCount, wrongCount, this::restartGame);
+
+        setContentPane(resultPanel);
+
+        // 프레임 여백 유지
+        ((JComponent) getContentPane()).setBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        );
+
+        revalidate();
+        repaint();
+    }
+
+
+    // -----------------------
+    //  게임 다시 시작
+    // -----------------------
+    private void restartGame() {
+
+        // 스코어 초기화
+        correctCount = 0;
+        wrongCount = 0;
+
+        // 메인 화면 재구성 + 첫 문제 로딩
+        mainDesign();
+        loadRandomScript();
+
+        revalidate();
+        repaint();
+    }
+
+
+    // -----------------------
+    //  Entry Point
+    // -----------------------
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
     }
