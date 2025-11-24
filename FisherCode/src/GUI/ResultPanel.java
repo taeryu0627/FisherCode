@@ -23,6 +23,8 @@ public class ResultPanel extends JPanel {
         this.onRestart = onRestart;
         this.grade = calcGrade(correctCount, wrongCount);
 
+        
+        setLayout(new BorderLayout());
         // 배경 이미지 로드
         URL bgUrl = getClass().getResource("/resources/background/Dialog1.png");
         if (bgUrl != null) {
@@ -41,6 +43,8 @@ public class ResultPanel extends JPanel {
         add(center, BorderLayout.CENTER);
         add(createBottomPanel(), BorderLayout.SOUTH);
     }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {

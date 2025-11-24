@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import GUI.TutorialFrame;
 
 public class StartFrame extends JFrame {
 
@@ -51,7 +52,7 @@ public class StartFrame extends JFrame {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     dispose(); 
-                    new DialogFrame(); 
+                    new TutorialFrame(); 
                 }
                 
                 @Override
@@ -83,7 +84,10 @@ public class StartFrame extends JFrame {
         setVisible(true);
     }
     
+    // 개발 완료되면 주석 지울 것.
+    /*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(StartFrame::new);
     }
+    */
 }

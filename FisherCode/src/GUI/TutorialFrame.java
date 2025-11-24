@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class DialogFrame extends JFrame {
+public class TutorialFrame extends JFrame {
 
     private Image backgroundImage1;
     private Image backgroundImage2;
@@ -27,7 +27,7 @@ public class DialogFrame extends JFrame {
     private Timer typingTimer;
     private int typingSpeed = 20;
     
-    public DialogFrame() {
+    public TutorialFrame() {
         setTitle("대화창");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1300, 700);
@@ -123,7 +123,7 @@ public class DialogFrame extends JFrame {
     }
     
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(DialogFrame::new);
+        SwingUtilities.invokeLater(TutorialFrame::new);
     }
 }
 
