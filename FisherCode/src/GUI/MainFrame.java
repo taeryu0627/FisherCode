@@ -15,12 +15,18 @@ public class MainFrame extends JFrame {
     private int wrongCount = 0;     // 틀린 개수
     private int correctCount = 0;   // 맞춘 개수
 
+    // 🔹 현재 스테이지 (1~3)
+    private int currentStage = 1;
+
     // UI 구성 요소
     private PhonePanel phonePanel;
     private NotePanel notePanel;
 
-    private JLabel scoreLabel; // (맞춘 문제 수 표시)
-    
+    // 🔹 이제는 "맞은 문제"가 아니라 "현재 스테이지"를 표시
+    private JLabel stageLabel; 
+
+    // (defaultLines / domainLines / patternLines 는 NotePanel에서 쓰고 있으니
+    //  계속 두어도 되고, 안 쓰면 지워도 됨)
     private String[] defaultLines() {
         return new String[]{
                 "신뢰할 수 없는 유형의 URL 접속을 주의해야 한다",
@@ -35,7 +41,6 @@ public class MainFrame extends JFrame {
         };
     }
 
-    // 도메인 탭 내용
     private String[] domainLines() {
         return new String[]{
                 "URL 클릭 전 반드시 발신자를 다시 확인하세요.",
@@ -46,7 +51,6 @@ public class MainFrame extends JFrame {
         };
     }
 
-    // 패턴 탭 내용
     private String[] patternLines() {
         return new String[]{
                 "자주 쓰이는 스미싱 패턴",
@@ -87,14 +91,16 @@ public class MainFrame extends JFrame {
         mainPanel.setLayout(new BorderLayout(20, 20));
         setContentPane(mainPanel);
 
-        // 상단 점수 표시
-        scoreLabel = new JLabel("맞은 문제: 0", SwingConstants.RIGHT);
-        scoreLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-        scoreLabel.setForeground(Color.WHITE);
+        // 🔹 상단: 현재 스테이지 표시
+        stageLabel = new JLabel("현재 스테이지: " + currentStage, SwingConstants.RIGHT);
+        stageLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+
+        // 🔹 화면 모서리에서 살짝 띄우기 (위쪽 10px, 오른쪽 20px)
+        stageLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 20));
 
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setOpaque(false);
-        northPanel.add(scoreLabel, BorderLayout.EAST);
+        northPanel.add(stageLabel, BorderLayout.EAST);
 
         mainPanel.add(northPanel, BorderLayout.NORTH);
 
@@ -107,11 +113,9 @@ public class MainFrame extends JFrame {
         phonePanel = new PhonePanel("/resources/PhoneImg_2.png");
         centerPanel.add(phonePanel);
 
-     // Note Panel (내부에 버튼 포함)
+        // Note Panel (내부에 버튼 포함)
         notePanel = new NotePanel("/resources/NoteImg3.png");
         centerPanel.add(notePanel);
-
-
 
         // 오른쪽 Yes/No 버튼
         ButtonPanel yesBtn = new ButtonPanel(true);
@@ -131,21 +135,52 @@ public class MainFrame extends JFrame {
         eastWrapper.setOpaque(false);
         eastWrapper.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         eastWrapper.add(btnPanel, BorderLayout.SOUTH);
-        
 
         // 최종 배치
         mainPanel.add(centerPanel, BorderLayout.CENTER);
         mainPanel.add(eastWrapper, BorderLayout.EAST);
     }
 
-    // 정답 확인 로직 (3번 틀리면 결과 화면 이동)
+ // 🔹 스테이지 계산 & 라벨 + 연출
+    private void updateStage() {
+        int oldStage = currentStage;
+        int newStage;
 
+        if (correctCount >= 8) {
+            newStage = 3;
+        } else if (correctCount >= 4) {
+            newStage = 2;
+        } else {
+            newStage = 1;
+        }
+
+        currentStage = newStage;
+
+        // 라벨 텍스트 갱신
+        if (stageLabel != null) {
+            stageLabel.setText("현재 스테이지: " + currentStage);
+        }
+
+        // 🔥 스테이지가 올라갔을 때만 연출
+        if (newStage > oldStage) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "스테이지 " + newStage + "에 진입했습니다!",
+                    "Stage Up!",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }
+
+    // 정답 확인 로직 (3번 틀리면 결과 화면 이동)
     private void checkAnswer(boolean userAnswer) {
         boolean correct = (userAnswer == currentScript.isScam());
 
         if (correct) {
             correctCount++;
-            scoreLabel.setText("맞은 문제: " + correctCount);
+
+            // 🔹 정답 맞출 때마다 스테이지 갱신
+            updateStage();
 
             JOptionPane.showMessageDialog(
                     this,
@@ -172,18 +207,14 @@ public class MainFrame extends JFrame {
         }
     }
 
-
     // 랜덤 문제 호출
-
     private void loadRandomScript() {
         currentScript = stage1.getRandomScript();
         phonePanel.setRecvMessage(currentScript.getMessage());
         phonePanel.setReplyMessage("링크에 들어가도 되나요?");
     }
 
-
     // 결과 화면으로 전환
-
     private void showResultPanel() {
         getContentPane().removeAll();
         setContentPane(new ResultPanel(correctCount, wrongCount, this::restartGame));
@@ -192,12 +223,11 @@ public class MainFrame extends JFrame {
         repaint();
     }
 
-
     // 게임 재시작
-
     public void restartGame() {
         wrongCount = 0;
         correctCount = 0;
+        currentStage = 1;          // 🔹 스테이지도 1로 초기화
 
         getContentPane().removeAll();
         createMainLayout();
@@ -205,7 +235,6 @@ public class MainFrame extends JFrame {
         revalidate();
         repaint();
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
