@@ -107,16 +107,8 @@ public class MainFrame extends JFrame {
         phonePanel = new PhonePanel("/resources/PhoneImg_2.png");
         centerPanel.add(phonePanel);
 
-        // Note Panel + 오른쪽 버튼 바
-        notePanel = new NotePanel("/resources/NoteImg.png");
-
-        JPanel noteWrapper = new JPanel(new BorderLayout());
-        noteWrapper.setOpaque(false);
-
-        noteWrapper.add(notePanel, BorderLayout.CENTER);
-
      // Note Panel (내부에 버튼 포함)
-        notePanel = new NotePanel("/resources/NoteImg.png");
+        notePanel = new NotePanel("/resources/NoteImg3.png");
         centerPanel.add(notePanel);
 
 
