@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
-import Models.UIManager;
+import Models.FontUlleungdoM;
 
 public class TutorialFrame extends JFrame {
 	/**
@@ -134,7 +134,7 @@ public class TutorialFrame extends JFrame {
         
         // --- 텍스트 영역 ---
         textArea = new JTextArea();
-        textArea.setFont(UIManager.getCustomFont(24f));
+        textArea.setFont(FontUlleungdoM.getCustomFont(24f));
         textArea.setForeground(Color.WHITE);
         textArea.setBackground(new Color(30, 120, 200));
         textArea.setBounds(100, 430, 1090, 200);
