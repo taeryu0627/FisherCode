@@ -122,7 +122,6 @@ public class TutorialFrame extends JFrame {
         
         // --- 텍스트 영역 ---
         textArea = new JTextArea();
-        Font customFont = loadFont("/resources/fonts/HY울릉도B.ttf", 24f);
         textArea.setFont(customFont);
         textArea.setForeground(Color.WHITE);
         textArea.setBackground(new Color(30, 120, 200));
@@ -155,6 +154,8 @@ public class TutorialFrame extends JFrame {
     }
 
     // 폰트 로드
+	Font customFont = loadFont("/resources/fonts/HY울릉도B.ttf", 24f);
+
     private Font loadFont(String path, float size) {
         try {
             return Font.createFont(
@@ -166,6 +167,7 @@ public class TutorialFrame extends JFrame {
             return new Font("맑은 고딕", Font.PLAIN, (int) size);
         }
     }
+	
     // 대화가 끝나면 MainFrame 표시
     private void showNextDialog() {
         dialogIndex++;
