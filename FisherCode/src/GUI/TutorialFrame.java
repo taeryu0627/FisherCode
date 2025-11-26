@@ -2,6 +2,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import Models.UIManager;
 
 public class TutorialFrame extends JFrame {
@@ -51,19 +52,28 @@ public class TutorialFrame extends JFrame {
     private Timer typingTimer;
     private int typingSpeed = 20;
     
+    private Image loadImage(String path) {
+        URL url = getClass().getResource(path);
+        if (url == null) {
+            System.err.println("튜토리얼 이미지 로드 실패: " + path);
+            return null;
+        }
+        return new ImageIcon(url).getImage();
+    }
+    
     public TutorialFrame() {
         setTitle("튜토리얼");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1300, 700);
         setLocationRelativeTo(null);
         // --- 튜토리얼 이미지 ---
-        TutorialIMG1 = new ImageIcon("src/resources/background/Dialog1.png").getImage();
-        TutorialIMG2 = new ImageIcon("src/resources/background/Dialog2.png").getImage();
-        TutorialIMG3 = new ImageIcon("src/resources/background/Tutorial1.png").getImage();
-        TutorialIMG4 = new ImageIcon("src/resources/background/Tutorial2.png").getImage();
-        TutorialIMG5 = new ImageIcon("src/resources/background/Tutorial3.png").getImage();
-        TutorialIMG6 = new ImageIcon("src/resources/background/Tutorial4.png").getImage();
-        TutorialIMG7 = new ImageIcon("src/resources/background/Tutorial5.png").getImage();
+        TutorialIMG1 = loadImage("/resources/background/Dialog1.png");
+        TutorialIMG2 = loadImage("/resources/background/Dialog2.png");
+        TutorialIMG3 = loadImage("/resources/background/Tutorial1.png");
+        TutorialIMG4 = loadImage("/resources/background/Tutorial2.png");
+        TutorialIMG5 = loadImage("/resources/background/Tutorial3.png");
+        TutorialIMG6 = loadImage("/resources/background/Tutorial4.png");
+        TutorialIMG7 = loadImage("/resources/background/Tutorial5.png");
         
         // --- 튜토리얼 이미지 순서 ---
         JPanel backgroundPanel = new JPanel() {
@@ -96,9 +106,10 @@ public class TutorialFrame extends JFrame {
         add(backgroundPanel);
 
         // --- 다음 대화 화살표 버튼 ---
-        ImageIcon arrowIcon = new ImageIcon("src/resources/Arrow.png");
+        URL arrowUrl = getClass().getResource("/resources/Arrow.png");
+        ImageIcon arrowIcon = (arrowUrl != null) ? new ImageIcon(arrowUrl) : new ImageIcon();
         Image scaledArrow = arrowIcon.getImage().getScaledInstance(80, 60, Image.SCALE_SMOOTH);
-
+        
         nextArrow = new JLabel(new ImageIcon(scaledArrow));
         nextArrow.setBounds(1100, 550, 80, 60);  
         nextArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
