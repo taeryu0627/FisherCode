@@ -3,7 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import Models.UIManager;
+import Models.FontUlleungdoM;
 
 public class ResultPanel extends JPanel {
 
@@ -88,7 +88,7 @@ public class ResultPanel extends JPanel {
 
     private JComponent createBottomPanel() {
         JButton restartBtn = new JButton("다시 시작");
-        restartBtn.setFont(UIManager.getCustomFont(18f).deriveFont(Font.BOLD));
+        restartBtn.setFont(FontUlleungdoM.getCustomFont(18f).deriveFont(Font.BOLD));
         restartBtn.addActionListener(e -> {
             if (onRestart != null) {
                 onRestart.run();
@@ -213,7 +213,7 @@ public class ResultPanel extends JPanel {
                 topY = y + targetH + 40; // 아래 텍스트 시작점
             } else {
                 // 이미지 없을 때 fallback: 글자로 등급 표시
-            	g2.setFont(UIManager.getCustomFont(110f).deriveFont(Font.BOLD));
+            	g2.setFont(FontUlleungdoM.getCustomFont(110f).deriveFont(Font.BOLD));
                 String gradeStr = String.valueOf(grade);
                 FontMetrics fmGrade = g2.getFontMetrics();
                 int gradeX = (w - fmGrade.stringWidth(gradeStr)) / 2;
@@ -224,7 +224,7 @@ public class ResultPanel extends JPanel {
             }
 
             // 4) 맞춘/틀린 문제 수
-            g2.setFont(UIManager.getCustomFont(22f));
+            g2.setFont(FontUlleungdoM.getCustomFont(22f));
             g2.setColor(new Color(0x333333));
 
             int infoY = topY;
