@@ -5,11 +5,12 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import Models.UIManager;
 
 public class PhonePanel extends JPanel {
 
     private Image phoneImg;
-
+    
     private List<String> recvMsgLines = List.of(""); // 안전한 기본값
     private String replyText = "링크에 들어가도 되나요?";
 
@@ -73,7 +74,7 @@ public class PhonePanel extends JPanel {
 
         String title = "발신자 번호";
         g2.setColor(Color.WHITE);
-        g2.setFont(new Font("customFont", Font.BOLD, 32));
+        g2.setFont(UIManager.getCustomFont(32f).deriveFont(Font.BOLD));
         FontMetrics fmTitle = g2.getFontMetrics();
 
         int titleX = screenX + (screenW - fmTitle.stringWidth(title)) / 2;
@@ -81,7 +82,7 @@ public class PhonePanel extends JPanel {
         g2.drawString(title, titleX, titleY);
 
         String number = "02-123-456";
-        g2.setFont(new Font("customFont", Font.PLAIN, 18));
+        g2.setFont(UIManager.getCustomFont(18f));
         FontMetrics fmNum = g2.getFontMetrics();
 
         int numX = screenX + (screenW - fmNum.stringWidth(number)) / 2;
@@ -92,7 +93,7 @@ public class PhonePanel extends JPanel {
     private void bottomDesign(Graphics2D g2, int msgAreaX, int msgAreaY, int msgAreaW) {
 
         // 상대방 메시지 텍스트
-        g2.setFont(new Font("customFont", Font.PLAIN, 15));
+    	g2.setFont(UIManager.getCustomFont(15f));
         FontMetrics fm = g2.getFontMetrics();
 
         int paddingX = 18;
@@ -134,7 +135,7 @@ public class PhonePanel extends JPanel {
         }
 
         // 내 답장 말풍선
-        g2.setFont(new Font("customFont", Font.PLAIN, 15));
+        g2.setFont(UIManager.getCustomFont(15f));
         FontMetrics fm2 = g2.getFontMetrics();
 
         int replyTextW = fm2.stringWidth(replyText);
@@ -154,20 +155,5 @@ public class PhonePanel extends JPanel {
         int replyTextX = replyX + 18;
         int replyTextY = replyY + 10 + fm2.getAscent();
         g2.drawString(replyText, replyTextX, replyTextY);
-    }
-
-    // 폰트 로드
-    Font customFont = loadFont("src/resources/fonts/HY울릉도B.ttf", 24f);
-    
-    private Font loadFont(String path, float size) {
-        try {
-            return Font.createFont(
-                    Font.TRUETYPE_FONT,
-                    new java.io.File("src/resources/font/HY울릉도B.ttf")
-            ).deriveFont(size);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Font("맑은 고딕", Font.PLAIN, (int) size);
-        }
     }
 }
