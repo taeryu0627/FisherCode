@@ -5,7 +5,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-import Models.UIManager;
+import Models.FontUlleungdoM;
 
 public class PhonePanel extends JPanel {
 
@@ -74,7 +74,7 @@ public class PhonePanel extends JPanel {
 
         String title = "발신자 번호";
         g2.setColor(Color.WHITE);
-        g2.setFont(UIManager.getCustomFont(32f).deriveFont(Font.BOLD));
+        g2.setFont(FontUlleungdoM.getCustomFont(32f).deriveFont(Font.BOLD));
         FontMetrics fmTitle = g2.getFontMetrics();
 
         int titleX = screenX + (screenW - fmTitle.stringWidth(title)) / 2;
@@ -82,7 +82,7 @@ public class PhonePanel extends JPanel {
         g2.drawString(title, titleX, titleY);
 
         String number = "02-123-456";
-        g2.setFont(UIManager.getCustomFont(18f));
+        g2.setFont(FontUlleungdoM.getCustomFont(18f));
         FontMetrics fmNum = g2.getFontMetrics();
 
         int numX = screenX + (screenW - fmNum.stringWidth(number)) / 2;
@@ -93,7 +93,7 @@ public class PhonePanel extends JPanel {
     private void bottomDesign(Graphics2D g2, int msgAreaX, int msgAreaY, int msgAreaW) {
 
         // 상대방 메시지 텍스트
-    	g2.setFont(UIManager.getCustomFont(15f));
+    	g2.setFont(FontUlleungdoM.getCustomFont(15f));
         FontMetrics fm = g2.getFontMetrics();
 
         int paddingX = 18;
@@ -135,7 +135,7 @@ public class PhonePanel extends JPanel {
         }
 
         // 내 답장 말풍선
-        g2.setFont(UIManager.getCustomFont(15f));
+        g2.setFont(FontUlleungdoM.getCustomFont(15f));
         FontMetrics fm2 = g2.getFontMetrics();
 
         int replyTextW = fm2.stringWidth(replyText);
