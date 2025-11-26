@@ -6,7 +6,7 @@ import java.net.URL;
 import Models.UIManager;
 
 public class NotePanel extends JPanel {
-
+	
     /* ============================
      *  배경 이미지 & 텍스트 데이터
      * ============================ */
@@ -117,7 +117,6 @@ public class NotePanel extends JPanel {
         b.setBackground(bgColor);
         b.setForeground(Color.WHITE);
         b.setFont(Models.UIManager.getCustomFont(14f).deriveFont(Font.BOLD));
-
         b.setPreferredSize(new Dimension(100, 40));
         b.setMaximumSize(new Dimension(120, 45));
 
@@ -147,12 +146,12 @@ public class NotePanel extends JPanel {
 
         // 글자 시작 위치 (노트 안쪽 기준)
         int startX = (int) (w * 0.18);
-        int y      = (int) (h * 0.20);   // 위에 버튼 바가 있으니 살짝 더 내려줌
-        int lineGap = 32;
+        int y      = (int) (h * 0.16);   // 위에 버튼 바가 있으니 살짝 더 내려줌
+        int lineGap = 34;
 
         g2.setColor(Color.DARK_GRAY);
         g2.setFont(UIManager.getCustomFont(18f));
-
+        
         if (currentLines != null) {
             for (String line : currentLines) {
                 g2.drawString(line, startX, y);
