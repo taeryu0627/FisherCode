@@ -3,170 +3,157 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import Models.UIManager;
 
-public class NotePanel extends JPanel {
-	
-    /* ============================
-     *  배경 이미지 & 텍스트 데이터
-     * ============================ */
+public class PhonePanel extends JPanel {
 
-    private Image noteImg;
+    private Image phoneImg;
+    
+    private List<String> recvMsgLines = List.of(""); // 안전한 기본값
+    private String replyText = "링크에 들어가도 되나요?";
 
-    // 기본 안내문
-    private final String[] defaultLines = {
-            "신뢰할 수 없는 유형의 URL 접속을 주의해야 한다",
-            "",
-            "1. 알 수 없는 최상위 도메인",
-            "   - .com, .org 등 신뢰 도메인",
-            "   - .xyz, .biz 등 생소 도메인",
-            "",
-            "2. 유사 도메인 링크 조심",
-            "   - google.com -> g00gle.com",
-            "   - paypal.com -> paypaI.com"
-    };
+    public PhonePanel(String resourcePath) {
 
-    // 도메인 관련 안내문
-    private final String[] domainLines = {
-            "URL 클릭 전 반드시 발신자를 다시 확인하세요.",
-            "",
-            "1. 은행/관공서는 공식 도메인을 사용",
-            "2. 주소창을 꼭 확인 (.go.kr / .bank 등)",
-            "3. '지금 바로 클릭'은 위험 신호",
-            "4. 개인정보 요청은 대부분 스미싱"
-    };
+        setOpaque(false); // 배경 패널 이미지가 자연스럽게 보이도록 설정
 
-    // 패턴 관련 안내문
-    private final String[] patternLines = {
-            "자주 쓰이는 스미싱 패턴",
-            "",
-            "- 택배 배송 조회 링크",
-            "- 본인 인증 유도",
-            "- 과태료/벌금 미납 안내",
-            "- 재난 지원금 / 지원금 신청 링크",
-            "",
-            "조금이라도 이상하면 직접 전화로 확인하세요!"
-    };
-
-    // 실제로 화면에 그릴 현재 문장들
-    private String[] currentLines = defaultLines;
-
-
-    /* ============================
-     *  생성자
-     * ============================ */
-    public NotePanel(String resourcePath) {
-        setOpaque(false);
-        setLayout(new BorderLayout());
-
-        // 배경 이미지 로드
         URL url = getClass().getResource(resourcePath);
-        if (url != null) {
-            noteImg = new ImageIcon(url).getImage();
+        if (url == null) {
+            System.err.println("PhonePanel 이미지 로드 실패: " + resourcePath);
         } else {
-            System.err.println("NotePanel 이미지 로드 실패: " + resourcePath);
+            phoneImg = new ImageIcon(url).getImage();
         }
-
-        // 상단 탭 버튼 바 추가
-        add(createHorizontalTabBar(), BorderLayout.NORTH);
     }
 
-
-    /* ============================
-     *  상단 가로 버튼 바 생성
-     * ============================ */
-    private JComponent createHorizontalTabBar() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
-        panel.setOpaque(false);
-
-        JButton btnDefault = createTabButton("기본",   new Color(255, 80, 80));   // 빨강
-        JButton btnDomain  = createTabButton("도메인", new Color(80, 130, 255));  // 파랑
-        JButton btnPattern = createTabButton("패턴",   new Color(255, 210, 60));  // 노랑
-
-        // 텍스트 세트 교체
-        btnDefault.addActionListener(e -> {
-            currentLines = defaultLines;
-            repaint();
-        });
-
-        btnDomain.addActionListener(e -> {
-            currentLines = domainLines;
-            repaint();
-        });
-
-        btnPattern.addActionListener(e -> {
-            currentLines = patternLines;
-            repaint();
-        });
-
-        panel.add(btnDefault);
-        panel.add(btnDomain);
-        panel.add(btnPattern);
-
-        return panel;
+    public void setRecvMessage(String msg) {
+        this.recvMsgLines = Arrays.asList(msg.split("\n"));
+        repaint();
     }
 
-    // 탭 버튼 공통 스타일
-    private JButton createTabButton(String text, Color bgColor) {
-        JButton b = new JButton(text);
-        b.setFocusPainted(false);
-        b.setContentAreaFilled(true);
-        b.setOpaque(true);
-        b.setBorderPainted(false);
-
-        b.setBackground(bgColor);
-        b.setForeground(Color.WHITE);
-        b.setFont(Models.UIManager.getCustomFont(14f).deriveFont(Font.BOLD));
-        b.setPreferredSize(new Dimension(100, 40));
-        b.setMaximumSize(new Dimension(120, 45));
-
-        b.setRolloverEnabled(false);   // ★ Hover 효과 제거
-        b.putClientProperty("JButton.buttonType", "square"); 
-        return b;
+    public void setReplyMessage(String reply) {
+        this.replyText = reply;
+        repaint();
     }
 
-
-    /* ============================
-     *  그림 그리기
-     * ============================ */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (noteImg == null) return;
+        if (phoneImg == null) return;
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int w = getWidth();
+        // 배경(폰 테두리) 이미지 먼저 그림
+        g2.drawImage(phoneImg, 0, 0, getWidth(), getHeight(), this);
+
+        // 화면 좌표 계산
+        int w = getWidth() - 30;
         int h = getHeight();
 
-        // 노트 배경 이미지
-        g2.drawImage(noteImg, 0, 0, w, h, this);
+        int screenX = (int) (w * 0.17);
+        int screenY = (int) (h * 0.09);
+        int screenW = (int) (w * 0.72);
+        int screenH = (int) (h * 0.75);
 
-        // 글자 시작 위치 (노트 안쪽 기준)
-        int startX = (int) (w * 0.18);
-        int y      = (int) (h * 0.16);   // 위에 버튼 바가 있으니 살짝 더 내려줌
-        int lineGap = 34;
+        int headerH = (int) (screenH * 0.14);
 
-        g2.setColor(Color.DARK_GRAY);
-        g2.setFont(UIManager.getCustomFont(18f));
-        
-        if (currentLines != null) {
-            for (String line : currentLines) {
-                g2.drawString(line, startX, y);
-                y += lineGap;
-            }
-        }
+        int msgAreaX = screenX + 10;
+        int msgAreaY = screenY + headerH + 20;
+        int msgAreaW = screenW - 20;
+
+        // 디자인 함수 호출
+        topDesign(g2, screenX, screenY, screenW, headerH);
+        bottomDesign(g2, msgAreaX, msgAreaY, msgAreaW);
 
         g2.dispose();
     }
-    
-    /* ============================
-     *  외부에서 강제로 내용 바꾸고 싶을 때
-     * ============================ */
-    public void setLines(String[] lines) {
-        this.currentLines = lines;
-        repaint();
+
+    private void topDesign(Graphics2D g2, int screenX, int screenY, int screenW, int headerH) {
+
+        String title = "발신자 번호";
+        g2.setColor(Color.WHITE);
+        g2.setFont(UIManager.getCustomFont(32f).deriveFont(Font.BOLD));
+        FontMetrics fmTitle = g2.getFontMetrics();
+
+        int titleX = screenX + (screenW - fmTitle.stringWidth(title)) / 2;
+        int titleY = screenY + fmTitle.getAscent() + 5;
+        g2.drawString(title, titleX, titleY);
+
+        String number = "02-123-456";
+        g2.setFont(UIManager.getCustomFont(18f));
+        FontMetrics fmNum = g2.getFontMetrics();
+
+        int numX = screenX + (screenW - fmNum.stringWidth(number)) / 2;
+        int numY = titleY + fmNum.getHeight();
+        g2.drawString(number, numX, numY);
+    }
+
+    private void bottomDesign(Graphics2D g2, int msgAreaX, int msgAreaY, int msgAreaW) {
+
+        // 상대방 메시지 텍스트
+    	g2.setFont(UIManager.getCustomFont(15f));
+        FontMetrics fm = g2.getFontMetrics();
+
+        int paddingX = 18;
+        int paddingY = 16;
+        int lineGap = 4;
+
+        int textBlockHeight = Math.max( fm.getHeight(), 0 );
+        textBlockHeight = 0;
+        for (String line : recvMsgLines) {
+            textBlockHeight += fm.getHeight() + lineGap;
+        }
+        textBlockHeight -= lineGap;
+
+        int bubbleW = (int) (msgAreaW * 0.85);
+        int bubbleH = textBlockHeight + paddingY * 2;
+        int bubbleX = msgAreaX + 10;
+        int bubbleY = msgAreaY;
+
+        int arc = 24;
+
+        // 말풍선 그림자
+        g2.setColor(new Color(0, 0, 0, 35));
+        g2.fillRoundRect(bubbleX + 2, bubbleY + 3, bubbleW, bubbleH, arc, arc);
+
+        // 말풍선 본체
+        g2.setColor(new Color(245, 245, 247));
+        g2.fillRoundRect(bubbleX, bubbleY, bubbleW, bubbleH, arc, arc);
+        g2.setColor(new Color(220, 220, 220));
+        g2.drawRoundRect(bubbleX, bubbleY, bubbleW, bubbleH, arc, arc);
+
+        // 텍스트
+        g2.setColor(Color.BLACK);
+        int textX = bubbleX + paddingX;
+        int textY = bubbleY + paddingY + fm.getAscent();
+
+        for (String line : recvMsgLines) {
+            g2.drawString(line, textX, textY);
+            textY += fm.getHeight() + lineGap;
+        }
+
+        // 내 답장 말풍선
+        g2.setFont(UIManager.getCustomFont(15f));
+        FontMetrics fm2 = g2.getFontMetrics();
+
+        int replyTextW = fm2.stringWidth(replyText);
+        int replyBubbleW = replyTextW + 36;
+        int replyBubbleH = fm2.getHeight() + 20;
+
+        int replyX = msgAreaX + msgAreaW - replyBubbleW - 10;
+        int replyY = bubbleY + bubbleH + 20;
+
+        g2.setColor(new Color(0, 0, 0, 35));
+        g2.fillRoundRect(replyX + 2, replyY + 3, replyBubbleW, replyBubbleH, 20, 20);
+
+        g2.setColor(new Color(80, 140, 255));
+        g2.fillRoundRect(replyX, replyY, replyBubbleW, replyBubbleH, 20, 20);
+
+        g2.setColor(Color.WHITE);
+        int replyTextX = replyX + 18;
+        int replyTextY = replyY + 10 + fm2.getAscent();
+        g2.drawString(replyText, replyTextX, replyTextY);
     }
 }
