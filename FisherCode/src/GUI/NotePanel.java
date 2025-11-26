@@ -115,7 +115,7 @@ public class NotePanel extends JPanel {
 
         b.setBackground(bgColor);
         b.setForeground(Color.WHITE);
-        b.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+        b.setFont(new Font("customFont", Font.BOLD, 14));
 
         b.setPreferredSize(new Dimension(100, 40));
         b.setMaximumSize(new Dimension(120, 45));
@@ -150,7 +150,7 @@ public class NotePanel extends JPanel {
         int lineGap = 32;
 
         g2.setColor(Color.DARK_GRAY);
-        g2.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
+        g2.setFont(new Font("customFont", Font.PLAIN, 18));
 
         if (currentLines != null) {
             for (String line : currentLines) {
@@ -162,6 +162,22 @@ public class NotePanel extends JPanel {
         g2.dispose();
     }
 
+    // 폰트 로드
+    Font customFont = loadFont("src/resources/fonts/HY울릉도B.ttf", 24f);
+    
+    private Font loadFont(String path, float size) {
+        try {
+            return Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    new java.io.File("src/resources/font/HY울릉도B.ttf")
+            ).deriveFont(size);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Font("맑은 고딕", Font.PLAIN, (int) size);
+        }
+        
+    }
+    
     /* ============================
      *  외부에서 강제로 내용 바꾸고 싶을 때
      * ============================ */
