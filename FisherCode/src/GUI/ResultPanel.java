@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import Models.UIManager;
 
 public class ResultPanel extends JPanel {
 
@@ -87,7 +88,7 @@ public class ResultPanel extends JPanel {
 
     private JComponent createBottomPanel() {
         JButton restartBtn = new JButton("다시 시작");
-        restartBtn.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+        restartBtn.setFont(UIManager.getCustomFont(18f).deriveFont(Font.BOLD));
         restartBtn.addActionListener(e -> {
             if (onRestart != null) {
                 onRestart.run();
@@ -212,7 +213,7 @@ public class ResultPanel extends JPanel {
                 topY = y + targetH + 40; // 아래 텍스트 시작점
             } else {
                 // 이미지 없을 때 fallback: 글자로 등급 표시
-                g2.setFont(new Font("맑은 고딕", Font.BOLD, 110));
+            	g2.setFont(UIManager.getCustomFont(110f).deriveFont(Font.BOLD));
                 String gradeStr = String.valueOf(grade);
                 FontMetrics fmGrade = g2.getFontMetrics();
                 int gradeX = (w - fmGrade.stringWidth(gradeStr)) / 2;
@@ -223,7 +224,7 @@ public class ResultPanel extends JPanel {
             }
 
             // 4) 맞춘/틀린 문제 수
-            g2.setFont(new Font("맑은 고딕", Font.PLAIN, 22));
+            g2.setFont(UIManager.getCustomFont(22f));
             g2.setColor(new Color(0x333333));
 
             int infoY = topY;
@@ -236,11 +237,7 @@ public class ResultPanel extends JPanel {
             g2.dispose();
         }
     }
-
 /*
-     // -----------------------
-    //  단독 테스트용 main (옵션)
-    // -----------------------
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame f = new JFrame("Result Test");
@@ -251,5 +248,5 @@ public class ResultPanel extends JPanel {
             f.setVisible(true);
         });
     }
- */
+*/
 }
