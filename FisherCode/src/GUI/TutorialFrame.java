@@ -2,6 +2,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import Models.UIManager;
 
 public class TutorialFrame extends JFrame {
 	/**
@@ -56,13 +57,13 @@ public class TutorialFrame extends JFrame {
         setSize(1300, 700);
         setLocationRelativeTo(null);
         // --- 튜토리얼 이미지 ---
-        TutorialIMG1 = new ImageIcon("/resources/background/Dialog1.png").getImage();
-        TutorialIMG2 = new ImageIcon("/resources/background/Dialog2.png").getImage();
-        TutorialIMG3 = new ImageIcon("/resources/background/Tutorial1.png").getImage();
-        TutorialIMG4 = new ImageIcon("/resources/background/Tutorial2.png").getImage();
-        TutorialIMG5 = new ImageIcon("/resources/background/Tutorial3.png").getImage();
-        TutorialIMG6 = new ImageIcon("/resources/background/Tutorial4.png").getImage();
-        TutorialIMG7 = new ImageIcon("/resources/background/Tutorial5.png").getImage();
+        TutorialIMG1 = new ImageIcon("src/resources/background/Dialog1.png").getImage();
+        TutorialIMG2 = new ImageIcon("src/resources/background/Dialog2.png").getImage();
+        TutorialIMG3 = new ImageIcon("src/resources/background/Tutorial1.png").getImage();
+        TutorialIMG4 = new ImageIcon("src/resources/background/Tutorial2.png").getImage();
+        TutorialIMG5 = new ImageIcon("src/resources/background/Tutorial3.png").getImage();
+        TutorialIMG6 = new ImageIcon("src/resources/background/Tutorial4.png").getImage();
+        TutorialIMG7 = new ImageIcon("src/resources/background/Tutorial5.png").getImage();
         
         // --- 튜토리얼 이미지 순서 ---
         JPanel backgroundPanel = new JPanel() {
@@ -95,7 +96,7 @@ public class TutorialFrame extends JFrame {
         add(backgroundPanel);
 
         // --- 다음 대화 화살표 버튼 ---
-        ImageIcon arrowIcon = new ImageIcon("/resources/Arrow.png");
+        ImageIcon arrowIcon = new ImageIcon("src/resources/Arrow.png");
         Image scaledArrow = arrowIcon.getImage().getScaledInstance(80, 60, Image.SCALE_SMOOTH);
 
         nextArrow = new JLabel(new ImageIcon(scaledArrow));
@@ -122,7 +123,7 @@ public class TutorialFrame extends JFrame {
         
         // --- 텍스트 영역 ---
         textArea = new JTextArea();
-        textArea.setFont(customFont);
+        textArea.setFont(UIManager.getCustomFont(24f));
         textArea.setForeground(Color.WHITE);
         textArea.setBackground(new Color(30, 120, 200));
         textArea.setBounds(100, 430, 1090, 200);
@@ -152,22 +153,7 @@ public class TutorialFrame extends JFrame {
         });
         typingTimer.start();
     }
-
-    // 폰트 로드
-	Font customFont = loadFont("/resources/fonts/HY울릉도B.ttf", 24f);
-
-    private Font loadFont(String path, float size) {
-        try {
-            return Font.createFont(
-                    Font.TRUETYPE_FONT,
-                    new java.io.File("/resources/font/HY울릉도B.ttf")
-            ).deriveFont(size);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Font("맑은 고딕", Font.PLAIN, (int) size);
-        }
-    }
-	
+    
     // 대화가 끝나면 MainFrame 표시
     private void showNextDialog() {
         dialogIndex++;
