@@ -11,15 +11,8 @@ public class TutorialFrame extends JFrame {
 	 * dialogs : 출력 대사
 	 * dialogIndex넘버에 따라서 튜토리얼 이미지 전환
 	 */
-	
-    private Image TutorialIMG1;
-    private Image TutorialIMG2;
-    private Image TutorialIMG3;
-    private Image TutorialIMG4;
-    private Image TutorialIMG5;
-    private Image TutorialIMG6;
-    private Image TutorialIMG7;
 
+    private String imgPath = "/resources/background/";
     private JTextArea textArea;
     private JLabel nextArrow;
     
@@ -51,6 +44,7 @@ public class TutorialFrame extends JFrame {
     private int charIndex = 0;
     private Timer typingTimer;
     private int typingSpeed = 20;
+	protected Object img;
     
     private Image loadImage(String path) {
         URL url = getClass().getResource(path);
@@ -66,39 +60,43 @@ public class TutorialFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1300, 700);
         setLocationRelativeTo(null);
-        // --- 튜토리얼 이미지 ---
-        TutorialIMG1 = loadImage("/resources/background/Dialog1.png");
-        TutorialIMG2 = loadImage("/resources/background/Dialog2.png");
-        TutorialIMG3 = loadImage("/resources/background/Tutorial1.png");
-        TutorialIMG4 = loadImage("/resources/background/Tutorial2.png");
-        TutorialIMG5 = loadImage("/resources/background/Tutorial3.png");
-        TutorialIMG6 = loadImage("/resources/background/Tutorial4.png");
-        TutorialIMG7 = loadImage("/resources/background/Tutorial5.png");
+
         
         // --- 튜토리얼 이미지 순서 ---
         JPanel backgroundPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                Image currentImage = TutorialIMG1;
+                String imgPath2 = new String();
                 
-                if (dialogIndex >= 14) {
-                    currentImage = TutorialIMG2;
-                } else if (dialogIndex >= 13) {
-                    currentImage = TutorialIMG7;
-                } else if (dialogIndex >= 12) {
-                    currentImage = TutorialIMG6;
-                } else if (dialogIndex >= 11) {
-                    currentImage = TutorialIMG5;
-                } else if (dialogIndex >= 10) {
-                    currentImage = TutorialIMG4;
-                } else if (dialogIndex >= 8) {
-                    currentImage = TutorialIMG3;
-                } else if (dialogIndex >= 3) {
-                    currentImage = TutorialIMG2;
-                } else {
-                    currentImage = TutorialIMG1;
+                switch(dialogIndex) {
+                case 14:
+                	imgPath2 = imgPath + "Dialog2";
+                	break;
+                case 13:
+                	imgPath2 = imgPath + "Tutorial5";
+                	break;
+                case 12:
+                	imgPath2 = imgPath + "Tutorial4";
+                	break;
+                case 11:
+                	imgPath2 = imgPath + "Tutorial3";
+                	break;
+                case 10:
+                	imgPath2 = imgPath + "Tutorial2";
+                	break;
+                case 8:
+                	imgPath2 = imgPath + "Tutorial1";
+                	break;
+                case 3:
+                	imgPath2 = imgPath + "Dialog2";
+                	break;
+                default:
+                	imgPath2 = imgPath + "Dialog1";	
+                	break;
                 }
+
+                Image currentImage = loadImage(imgPath2 + ".png");
                 g.drawImage(currentImage, 0, 0, getWidth(), getHeight(), this);
             }
         };
