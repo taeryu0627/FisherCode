@@ -58,14 +58,9 @@ public class ResultPanel extends JPanel {
 
     //  등급 계산 로직
     private char calcGrade(int correct, int wrong) {
-        int total = correct + wrong;
-        if (total == 0) return 'F';
-
-        double rate = (double) correct / total;
-
-        if (rate >= 0.9) return 'A';
-        else if (rate >= 0.75) return 'B';
-        else if (rate >= 0.5) return 'C';
+        if (correct >= 15) return 'A';
+        else if (correct >= 12) return 'B';
+        else if (correct >= 8) return 'C';
         else return 'F';
     }
 
@@ -77,10 +72,10 @@ public class ResultPanel extends JPanel {
     }
 
 
-    //  Right : paperImg + score?.png + 텍스트
+    //  Right : paperImg + Result?.png + 텍스트
     private JComponent createRightPanel() {
         String paperPath = "/resources/result/paperImg.png";
-        String scorePath = "/resources/result/score" + grade + ".png";
+        String scorePath = "/resources/result/Result" + grade + ".png";
         return new ScorePaperPanel(paperPath, scorePath, grade, correctCount, wrongCount);
     }
 

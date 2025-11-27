@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 import Models.Script;
-import Models.Stage1Script;
+import Models.MainModel;
 
 public class MainFrame extends JFrame {
 
     // 게임 상태 변수
+	private MainModel mainModel = new MainModel();
     private Script currentScript;
-    private Stage1Script stage1 = new Stage1Script();
     private int wrongCount = 0;     // 틀린 개수
     private int correctCount = 0;   // 맞춘 개수
 
@@ -107,13 +107,10 @@ public class MainFrame extends JFrame {
         int oldStage = currentStage;
         int newStage;
 
-        if (correctCount >= 8) {
-            newStage = 3;
-        } else if (correctCount >= 4) {
-            newStage = 2;
-        } else {
-            newStage = 1;
-        }
+        if (correctCount >= 12) 	newStage = 4;
+        else if (correctCount >= 8) newStage = 3;
+        else if (correctCount >= 4) newStage = 2; 
+        else 						newStage = 1;
 
         currentStage = newStage;
 
@@ -122,7 +119,7 @@ public class MainFrame extends JFrame {
             stageLabel.setText("현재 스테이지: " + currentStage);
         }
 
-        // 🔥 스테이지가 올라갔을 때만 연출
+        // 스테이지가 올라갔을 때만 연출
         if (newStage > oldStage) {
             JOptionPane.showMessageDialog(
                     this,
@@ -170,10 +167,17 @@ public class MainFrame extends JFrame {
 
     // 랜덤 문제 호출
     private void loadRandomScript() {
-        currentScript = stage1.getRandomScript();
+        currentScript = mainModel.getScriptForStage(currentStage);
+
+        if (currentScript == null) {
+            System.err.println("[MainFrame] currentScript가 null입니다. 문제를 불러오지 못했습니다.");
+            return;
+        }
+
         phonePanel.setRecvMessage(currentScript.getMessage());
-        phonePanel.setReplyMessage("링크에 들어가도 되나요?");
+        // phonePanel.setReplyMessage("링크에 들어가도 되나요?");
     }
+
 
     // 결과 화면으로 전환
     private void showResultPanel() {
@@ -198,8 +202,9 @@ public class MainFrame extends JFrame {
     }
     
     // 메인 테스트를 위해 남겨둠
-
+/*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
     }
+    */
 }
