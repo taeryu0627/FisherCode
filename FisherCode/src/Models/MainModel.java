@@ -34,7 +34,8 @@ public class MainModel {
         			false,
         			"[SKHU 치과] \n"
         			+"예약하신 진료가\n"
-        			+"내일 오전 9시에 예정되어 있습니다."
+        			+"내일 오전 9시에 예정되어 있습니다.\n"
+        			+ "http://www.365allcare.com"
         			));
         	scripts.add(new Script(
         			0,
@@ -74,7 +75,7 @@ public class MainModel {
 
             scripts.add(new Script(
                    1,
-                   true,
+                   false,
                     "[성남시청]1월 30일 확진자 80명 발생.\n"
                   + "손씻기, 주기적 환기 등\n"
                   + "개인방역수칙 준수바랍니다\n"
