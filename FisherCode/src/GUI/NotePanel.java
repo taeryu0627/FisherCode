@@ -7,9 +7,7 @@ import Models.FontUlleungdoB;
 
 public class NotePanel extends JPanel {
 	
-    /* ============================
-     *  배경 이미지 & 텍스트 데이터
-     * ============================ */
+//  배경 이미지 & 텍스트 데이터
 
     private Image noteImg;
 
@@ -52,9 +50,7 @@ public class NotePanel extends JPanel {
     private String[] currentLines = defaultLines;
 
 
-    /* ============================
-     *  생성자
-     * ============================ */
+ // 생성자
     public NotePanel(String resourcePath) {
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -72,9 +68,8 @@ public class NotePanel extends JPanel {
     }
 
 
-    /* ============================
-     *  상단 가로 버튼 바 생성
-     * ============================ */
+
+// 상단 가로 버튼 바 생성
     private JComponent createHorizontalTabBar() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
         panel.setOpaque(false);
@@ -126,9 +121,7 @@ public class NotePanel extends JPanel {
     }
 
 
-    /* ============================
-     *  그림 그리기
-     * ============================ */
+// 그림 그리기
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -162,9 +155,7 @@ public class NotePanel extends JPanel {
         g2.dispose();
     }
     
-    /* ============================
-     *  외부에서 강제로 내용 바꾸고 싶을 때
-     * ============================ */
+// 외부에서 강제로 내용 바꾸고 싶을 때
     public void setLines(String[] lines) {
         this.currentLines = lines;
         repaint();

@@ -12,7 +12,7 @@ public class PhonePanel extends JPanel {
     private Image phoneImg;
     
     private List<String> recvMsgLines = List.of(""); // 안전한 기본값
-    private String replyText = "링크에 들어가도 되나요?";
+    private String replyText = "";
 
     public PhonePanel(String resourcePath) {
 
@@ -102,7 +102,7 @@ public class PhonePanel extends JPanel {
 
         int textBlockHeight = Math.max( fm.getHeight(), 0 );
         textBlockHeight = 0;
-        for (String line : recvMsgLines) {
+        for (@SuppressWarnings("unused") String line : recvMsgLines) {
             textBlockHeight += fm.getHeight() + lineGap;
         }
         textBlockHeight -= lineGap;
@@ -133,7 +133,7 @@ public class PhonePanel extends JPanel {
             g2.drawString(line, textX, textY);
             textY += fm.getHeight() + lineGap;
         }
-
+/*
         // 내 답장 말풍선
         g2.setFont(FontUlleungdoM.getCustomFont(15f));
         FontMetrics fm2 = g2.getFontMetrics();
@@ -155,5 +155,6 @@ public class PhonePanel extends JPanel {
         int replyTextX = replyX + 18;
         int replyTextY = replyY + 10 + fm2.getAscent();
         g2.drawString(replyText, replyTextX, replyTextY);
+        */
     }
 }

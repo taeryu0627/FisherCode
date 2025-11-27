@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
+@SuppressWarnings("serial")
 public class BackgroundPanel extends JPanel {
 
     private Image backgroundImg;

@@ -101,13 +101,10 @@ public class ResultPanel extends JPanel {
         return panel;
     }
 
-    // =========================================================
-    //  내부 클래스들
-    // =========================================================
 
-    /**
-     * 단일 이미지(꽉 채우기) 패널 – exResult?.png 용
-     */
+    //  내부 클래스들
+
+    
     private static class SingleImagePanel extends JPanel {
         private final Image img;
 
@@ -131,9 +128,7 @@ public class ResultPanel extends JPanel {
         }
     }
 
-    /**
-     * 종이(paperImg) + 등급 이미지(score?.png) + 직무평가/맞춘/틀린 표시 패널
-     */
+
     private static class ScorePaperPanel extends JPanel {
 
         private final Image paperImg;

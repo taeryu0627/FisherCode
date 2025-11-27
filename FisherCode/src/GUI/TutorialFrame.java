@@ -69,7 +69,7 @@ public class TutorialFrame extends JFrame {
                 super.paintComponent(g);
                 String imgPath2 = new String();
                 
-                switch(dialogIndex) {
+                switch(dialogIndex) { //dialogIndex로 현재 페이지 체크, 페이지에 맞는 이미지 출력
                 case 14:
                 	imgPath2 = imgPath + "Dialog2";
                 	break;
@@ -176,9 +176,10 @@ public class TutorialFrame extends JFrame {
         nextArrow.setVisible(false);
         startTypingAnimation();
     }
-    
+/*    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(TutorialFrame::new);
     }
+*/
 }
 

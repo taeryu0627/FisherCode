@@ -188,7 +188,7 @@ public class MainFrame extends JFrame {
     public void restartGame() {
         wrongCount = 0;
         correctCount = 0;
-        currentStage = 1;          // 🔹 스테이지도 1로 초기화
+        currentStage = 1;          // 스테이지도 1로 초기화
 
         getContentPane().removeAll();
         createMainLayout();
@@ -198,9 +198,8 @@ public class MainFrame extends JFrame {
     }
     
     // 메인 테스트를 위해 남겨둠
-/*
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
     }
-*/
 }
