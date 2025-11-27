@@ -9,7 +9,7 @@ public class NotePanel extends JPanel {
 
     // 배경 이미지 & 텍스트 데이터
     private Image noteImg;
-
+    private float currentFontSize = 18f; 
     // 기본 안내문
     private final String[] defaultLines = {
             "신뢰할 수 없는 유형의 URL 접속을 주의해야 한다",
@@ -22,27 +22,44 @@ public class NotePanel extends JPanel {
             "   - google.com -> g00gle.com",
             "   - paypal.com -> paypaI.com"
     };
-
-    // 도메인 관련 안내문
-    private final String[] domainLines = {
-            "URL 클릭 전 반드시 발신자를 다시 확인하세요.",
-            "",
-            "1. 은행/관공서는 공식 도메인을 사용",
-            "2. 주소창을 꼭 확인 (.go.kr / .bank 등)",
-            "3. '지금 바로 클릭'은 위험 신호",
-            "4. 개인정보 요청은 대부분 스미싱"
+    
+ // Stage 2 : 정부/공공기관 사칭
+    private final String[] governmentScamLines = {
+        "정부/공공기관 사칭 스미싱 분석 및 판단 지침",
+        "",
+        "1. 비공식 발신 정보 확인:",
+        "   - 메시지에 '국제발신' or 'Web발신' 표기 있는지 확인",
+        "   - 기관명을 명확히 표기하지 않고 ",
+        "       [세금], [수사중] 등 키워드만 쓰는 경우 의심",
+        "",
+        "2. 불필요한 행동 요구 집중 분석:",
+        "   - 정부기관은 문자로 앱 설치(APK 파일)를 유도하지 않음",
+        "   - 계좌 비밀번호, 카드 정보 등 금융 정보를 ",
+        "       문자로 입력 요청하는지 확인",
+        "",
+        "3. 불안감 조성 패턴:",
+        "   - '지금 즉시', '기간 마감 임박', '수사 대상' 등 ",
+        "       긴급한 조치를 요구하는지 분석"
     };
 
-    // 패턴 관련 안내문
-    private final String[] patternLines = {
-            "자주 쓰이는 스미싱 패턴",
-            "",
-            "- 택배 배송 조회 링크",
-            "- 본인 인증 유도",
-            "- 과태료/벌금 미납 안내",
-            "- 재난 지원금 / 지원금 신청 링크",
-            "",
-            "조금이라도 이상하면 직접 전화로 확인하세요!"
+    // Stage 3: 지인/가족 사칭
+    private final String[] familyScamLines = {
+        "지인/가족 사칭 스미싱 (메신저 피싱) 분석 지침",
+        "",
+        "1. 발신 번호 및 상황 설정의 비정상성:",
+        "   - 낯선 번호를 사용하며 '휴대폰 고장', '친구가 대신 보냄'",
+        "       등 전화 통화 불가 사유 제시",
+        "",
+        "2. 요청 내용의 긴급성 및 구체성 분석:",
+        "   - '급하게', '당장' 등의 표현으로 ",
+        "       금전 이체(용돈, 대리 결제)를 요청하는지 확인",
+        "   - 수수료를 선입금하면 큰 금액의 경품을",
+        "       받을 수 있다는 내용인지 확인",
+        "",
+        "3. 개인 정보 요구 수준 검토:",
+        "   - 신분증 사본, 계좌 비밀번호, 공인인증서 등",
+        "       타인이 알면 안 되는 민감한 정보를 요구하는지 분석",
+        ""
     };
 
     // 현재 표시할 문장들
@@ -78,23 +95,26 @@ public class NotePanel extends JPanel {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
         panel.setOpaque(false);
 
-        btnDefault = createTabButton("기본",   new Color(255, 80, 80));   // 빨강
-        btnDomain  = createTabButton("도메인", new Color(80, 130, 255));  // 파랑
-        btnPattern = createTabButton("패턴",   new Color(255, 210, 60));  // 노랑
+        btnDefault = createTabButton("도메인",   new Color(255, 80, 80));   // 빨강
+        btnDomain  = createTabButton("정부사칭", new Color(80, 130, 255));  // 파랑
+        btnPattern = createTabButton("지인사칭",   new Color(255, 210, 60));  // 노랑
 
         // 텍스트 세트 교체
         btnDefault.addActionListener(e -> {
             currentLines = defaultLines;
+            currentFontSize = 18f;   // 폰트 크기 변경
             repaint();
         });
 
         btnDomain.addActionListener(e -> {
-            currentLines = domainLines;
+            currentLines = governmentScamLines;
+            currentFontSize = 16f;   // 폰트 크기 변경
             repaint();
         });
 
         btnPattern.addActionListener(e -> {
-            currentLines = patternLines;
+            currentLines = familyScamLines;
+            currentFontSize = 16f;   // 폰트 크기 변경
             repaint();
         });
 
@@ -126,9 +146,10 @@ public class NotePanel extends JPanel {
 
     // 🔹 스테이지에 따라 버튼 보이기/숨기기
     public void updateStage(int stage) {
-        // stage 1 : 기본만
-        // stage 2 : 기본 + 도메인
-        // stage 3 이상 : 기본 + 도메인 + 패턴
+        // stage 1 : 도메인
+        // stage 2 : 정부사칭 + 도메인
+        // stage 3 이상 : 정부사칭 + 도메인 + 지인사칭
+
         if (btnDefault != null) btnDefault.setVisible(true);
         if (btnDomain  != null) btnDomain.setVisible(stage >= 2);
         if (btnPattern != null) btnPattern.setVisible(stage >= 3);
@@ -153,13 +174,13 @@ public class NotePanel extends JPanel {
         // 노트 배경 이미지
         g2.drawImage(noteImg, 0, 0, w, h, this);
 
-        // 글자 시작 위치 (노트 안쪽 기준)
+        // 글자 위치
         int startX = (int) (w * 0.18);
         int y      = (int) (h * 0.16);
         int lineGap = 34;
 
         g2.setColor(Color.DARK_GRAY);
-        g2.setFont(FontUlleungdoB.getCustomFont(18f));
+        g2.setFont(FontUlleungdoB.getCustomFont(currentFontSize));  // ★ 현재 폰트 크기 적용
 
         if (currentLines != null) {
             for (String line : currentLines) {
