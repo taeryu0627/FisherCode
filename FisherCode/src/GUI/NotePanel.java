@@ -6,9 +6,8 @@ import java.net.URL;
 import Models.FontUlleungdoB;
 
 public class NotePanel extends JPanel {
-	
-//  배경 이미지 & 텍스트 데이터
 
+    // 배경 이미지 & 텍스트 데이터
     private Image noteImg;
 
     // 기본 안내문
@@ -46,11 +45,15 @@ public class NotePanel extends JPanel {
             "조금이라도 이상하면 직접 전화로 확인하세요!"
     };
 
-    // 실제로 화면에 그릴 현재 문장들
+    // 현재 표시할 문장들
     private String[] currentLines = defaultLines;
 
+    // 🔹 탭 버튼들을 필드로 관리
+    private JButton btnDefault;
+    private JButton btnDomain;
+    private JButton btnPattern;
 
- // 생성자
+    // 생성자
     public NotePanel(String resourcePath) {
         setOpaque(false);
         setLayout(new BorderLayout());
@@ -65,18 +68,19 @@ public class NotePanel extends JPanel {
 
         // 상단 탭 버튼 바 추가
         add(createHorizontalTabBar(), BorderLayout.NORTH);
+
+        // 🔹 초기 스테이지 1 기준으로 버튼 보이기 설정
+        updateStage(1);
     }
 
-
-
-// 상단 가로 버튼 바 생성
+    // 상단 가로 버튼 바 생성
     private JComponent createHorizontalTabBar() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
         panel.setOpaque(false);
 
-        JButton btnDefault = createTabButton("기본",   new Color(255, 80, 80));   // 빨강
-        JButton btnDomain  = createTabButton("도메인", new Color(80, 130, 255));  // 파랑
-        JButton btnPattern = createTabButton("패턴",   new Color(255, 210, 60));  // 노랑
+        btnDefault = createTabButton("기본",   new Color(255, 80, 80));   // 빨강
+        btnDomain  = createTabButton("도메인", new Color(80, 130, 255));  // 파랑
+        btnPattern = createTabButton("패턴",   new Color(255, 210, 60));  // 노랑
 
         // 텍스트 세트 교체
         btnDefault.addActionListener(e -> {
@@ -111,17 +115,29 @@ public class NotePanel extends JPanel {
 
         b.setBackground(bgColor);
         b.setForeground(Color.WHITE);
-        b.setFont(Models.FontUlleungdoB.getCustomFont(14f).deriveFont(Font.BOLD));
+        b.setFont(FontUlleungdoB.getCustomFont(14f).deriveFont(Font.BOLD));
         b.setPreferredSize(new Dimension(100, 40));
         b.setMaximumSize(new Dimension(120, 45));
 
-        b.setRolloverEnabled(false);   // ★ Hover 효과 제거
-        b.putClientProperty("JButton.buttonType", "square"); 
+        b.setRolloverEnabled(false);   // Hover 효과 제거
+        b.putClientProperty("JButton.buttonType", "square");
         return b;
     }
 
+    // 🔹 스테이지에 따라 버튼 보이기/숨기기
+    public void updateStage(int stage) {
+        // stage 1 : 기본만
+        // stage 2 : 기본 + 도메인
+        // stage 3 이상 : 기본 + 도메인 + 패턴
+        if (btnDefault != null) btnDefault.setVisible(true);
+        if (btnDomain  != null) btnDomain.setVisible(stage >= 2);
+        if (btnPattern != null) btnPattern.setVisible(stage >= 3);
 
-// 그림 그리기
+        revalidate();
+        repaint();
+    }
+
+    // 그림 그리기
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -139,12 +155,12 @@ public class NotePanel extends JPanel {
 
         // 글자 시작 위치 (노트 안쪽 기준)
         int startX = (int) (w * 0.18);
-        int y      = (int) (h * 0.16);   // 위에 버튼 바가 있으니 살짝 더 내려줌
+        int y      = (int) (h * 0.16);
         int lineGap = 34;
 
         g2.setColor(Color.DARK_GRAY);
         g2.setFont(FontUlleungdoB.getCustomFont(18f));
-        
+
         if (currentLines != null) {
             for (String line : currentLines) {
                 g2.drawString(line, startX, y);
@@ -154,8 +170,8 @@ public class NotePanel extends JPanel {
 
         g2.dispose();
     }
-    
-// 외부에서 강제로 내용 바꾸고 싶을 때
+
+    // 외부에서 강제로 내용 바꾸고 싶을 때
     public void setLines(String[] lines) {
         this.currentLines = lines;
         repaint();

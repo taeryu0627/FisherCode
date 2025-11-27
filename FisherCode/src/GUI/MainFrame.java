@@ -107,19 +107,22 @@ public class MainFrame extends JFrame {
         int oldStage = currentStage;
         int newStage;
 
-        if (correctCount >= 12) 	newStage = 4;
-        else if (correctCount >= 8) newStage = 3;
-        else if (correctCount >= 4) newStage = 2; 
-        else 						newStage = 1;
+        if (correctCount >= 12)      newStage = 4;
+        else if (correctCount >= 8)  newStage = 3;
+        else if (correctCount >= 4)  newStage = 2;
+        else                         newStage = 1;
 
         currentStage = newStage;
 
-        // 라벨 텍스트 갱신
         if (stageLabel != null) {
             stageLabel.setText("현재 스테이지: " + currentStage);
         }
 
-        // 스테이지가 올라갔을 때만 연출
+        // 🔹 노트 패널에게도 스테이지 변경 사실 알려주기
+        if (notePanel != null) {
+            notePanel.updateStage(currentStage);
+        }
+
         if (newStage > oldStage) {
             JOptionPane.showMessageDialog(
                     this,
@@ -202,9 +205,9 @@ public class MainFrame extends JFrame {
     }
     
     // 메인 테스트를 위해 남겨둠
-/*
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
     }
-    */
+
 }
