@@ -33,21 +33,23 @@ public class ScriptLoader {
                     continue;
                 }
 
-                // id ; category ; isScam ; message
-                String[] parts = line.split(";", 4);
-                if (parts.length < 4) {
+                // scamLevel;message;
+                String[] parts = line.split(";", 3);
+                if (parts.length < 3) {
                     System.err.println("형식이 올바르지 않은 줄: " + line);
                     continue;
                 }
 
-                String id = parts[0].trim();
-                String category = parts[1].trim();
-                boolean isScam = Boolean.parseBoolean(parts[2].trim());
-                String message = parts[3]
+//                String id = parts[0].trim();
+//                String category = parts[1].trim();
+//                boolean isScam = Boolean.parseBoolean(parts[].trim());
+                int scamLevel = Integer.parseInt(parts[0].trim());
+                boolean isScam = Boolean.parseBoolean(parts[1].trim());
+                String message = parts[2]
                         .replace("\\n", "\n")   // 파일 안의 \n → 실제 줄바꿈
                         .trim();
 
-                scripts.add(new Script(id, category, isScam, message));
+                scripts.add(new Script(scamLevel, isScam, message));
             }
         }
 

@@ -14,54 +14,16 @@ public class MainFrame extends JFrame {
     private int wrongCount = 0;     // 틀린 개수
     private int correctCount = 0;   // 맞춘 개수
 
-    // 🔹 현재 스테이지 (1~3)
+    // 현재 스테이지 (1~3)
     private int currentStage = 1;
 
     // UI 구성 요소
     private PhonePanel phonePanel;
     private NotePanel notePanel;
 
-    // 🔹 이제는 "맞은 문제"가 아니라 "현재 스테이지"를 표시
+    // "현재 스테이지"를 표시
     private JLabel stageLabel; 
 
-    // (defaultLines / domainLines / patternLines 는 NotePanel에서 쓰고 있으니
-    //  계속 두어도 되고, 안 쓰면 지워도 됨)
-    private String[] defaultLines() {
-        return new String[]{
-                "신뢰할 수 없는 유형의 URL 접속을 주의해야 한다",
-                "",
-                "1. 알 수 없는 최상위 도메인",
-                "   - .com, .org 등 신뢰 도메인",
-                "   - .xyz, .biz 등 생소 도메인",
-                "",
-                "2. 유사 도메인 링크 조심",
-                "   - google.com -> g00gle.com",
-                "   - paypal.com -> paypaI.com"
-        };
-    }
-
-    private String[] domainLines() {
-        return new String[]{
-                "URL 클릭 전 반드시 발신자를 다시 확인하세요.",
-                "",
-                "1. 은행/관공서는 공식 도메인을 사용",
-                "2. '지금 바로 클릭'은 위험 신호",
-                "3. 개인정보 요청은 99% 스미싱"
-        };
-    }
-
-    private String[] patternLines() {
-        return new String[]{
-                "자주 쓰이는 스미싱 패턴",
-                "",
-                "- 택배 배송 조회 링크",
-                "- 본인 인증 유도",
-                "- 과태료/벌금 미납 안내",
-                "- 재난 지원금 링크",
-                "",
-                "의심되면 직접 전화 확인!"
-        };
-    }
 
     public MainFrame() {
         setTitle("보이스피싱 예방 화면");
@@ -90,11 +52,11 @@ public class MainFrame extends JFrame {
         mainPanel.setLayout(new BorderLayout(20, 20));
         setContentPane(mainPanel);
 
-        // 🔹 상단: 현재 스테이지 표시
+        // 상단: 현재 스테이지 표시
         stageLabel = new JLabel("현재 스테이지: " + currentStage, SwingConstants.RIGHT);
         stageLabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 
-        // 🔹 화면 모서리에서 살짝 띄우기 (위쪽 10px, 오른쪽 20px)
+        // 화면 모서리에서 살짝 띄우기 (위쪽 10px, 오른쪽 20px)
         stageLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 20));
 
         JPanel northPanel = new JPanel(new BorderLayout());
@@ -140,7 +102,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(eastWrapper, BorderLayout.EAST);
     }
 
- // 🔹 스테이지 계산 & 라벨 + 연출
+ // 스테이지 계산 & 라벨 + 연출
     private void updateStage() {
         int oldStage = currentStage;
         int newStage;
@@ -234,6 +196,8 @@ public class MainFrame extends JFrame {
         revalidate();
         repaint();
     }
+    
+    // 메인 테스트를 위해 남겨둠
 /*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
