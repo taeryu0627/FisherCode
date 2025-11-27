@@ -5,7 +5,6 @@ import java.awt.*;
 
 import Models.Script;
 import Models.Stage1Script;
-import GUI.ResultPanel;
 
 public class MainFrame extends JFrame {
 
@@ -235,8 +234,9 @@ public class MainFrame extends JFrame {
         revalidate();
         repaint();
     }
-
+/*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
     }
+*/
 }

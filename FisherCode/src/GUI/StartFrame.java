@@ -3,7 +3,6 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import GUI.TutorialFrame;
 
 public class StartFrame extends JFrame {
 
@@ -22,10 +21,10 @@ public class StartFrame extends JFrame {
         setSize(1300, 700);
         setLocationRelativeTo(null); 
 
-        backgroundImage = new ImageIcon("/resources/background/StartScreen1.png").getImage();
-        startButtonIcon = new ImageIcon("/resources/StartBtn.png");
-        startButtonHoverIcon = new ImageIcon("/resources/StartBtn_hover.png"); 
-
+        backgroundImage = new ImageIcon(getClass().getResource("/resources/background/StartScreen1.png")).getImage();
+        startButtonIcon = new ImageIcon(getClass().getResource("/resources/StartBtn.png"));
+        startButtonHoverIcon = new ImageIcon(getClass().getResource("/resources/StartBtn_hover.png"));
+        
         JPanel backgroundPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -84,10 +83,8 @@ public class StartFrame extends JFrame {
         setVisible(true);
     }
     
-    // 개발 완료되면 주석 지울 것.
-    /*
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(StartFrame::new);
     }
-    */
 }
