@@ -137,7 +137,7 @@ public class MainFrame extends JFrame {
         if (correct) {
             correctCount++;
 
-            // 🔹 정답 맞출 때마다 스테이지 갱신
+            // 정답 맞출 때마다 스테이지 갱신
             updateStage();
 
             JOptionPane.showMessageDialog(

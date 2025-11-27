@@ -133,6 +133,7 @@ public class PhonePanel extends JPanel {
             g2.drawString(line, textX, textY);
             textY += fm.getHeight() + lineGap;
         }
+// 내가 답한 채팅, 현재는 사용 안함
 /*
         // 내 답장 말풍선
         g2.setFont(FontUlleungdoM.getCustomFont(15f));

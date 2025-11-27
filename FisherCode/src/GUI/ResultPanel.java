@@ -82,6 +82,7 @@ public class ResultPanel extends JPanel {
     //  Bottom : 다시 시작 버튼
 
     private JComponent createBottomPanel() {
+        // 다시 시작 버튼
         JButton restartBtn = new JButton("다시 시작");
         restartBtn.setFont(FontUlleungdoM.getCustomFont(18f).deriveFont(Font.BOLD));
         restartBtn.addActionListener(e -> {
@@ -90,9 +91,23 @@ public class ResultPanel extends JPanel {
             }
         });
 
+        // 처음으로 버튼 (StartFrame으로 돌아가기)
+        JButton toStartBtn = new JButton("처음으로");
+        toStartBtn.setFont(FontUlleungdoM.getCustomFont(18f).deriveFont(Font.BOLD));
+        toStartBtn.addActionListener(e -> {
+            // 이 패널을 감싸고 있는 최상위 윈도우(JFrame) 얻기
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window != null) {
+                window.dispose();      // 현재 창 닫기 (MainFrame)
+            }
+            new StartFrame();          // 시작 화면 다시 열기
+        });
+
         JPanel panel = new JPanel();
         panel.setOpaque(false);
         panel.add(restartBtn);
+        panel.add(Box.createHorizontalStrut(20)); // 버튼 사이 간격
+        panel.add(toStartBtn);
         return panel;
     }
 

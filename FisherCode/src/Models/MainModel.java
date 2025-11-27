@@ -243,9 +243,9 @@ public class MainModel {
         List<Script> filtered = new ArrayList<>();
 
         for (Script s : scripts) {
-            // stage 1 → level 0,1
-            // stage 2 → level 0,1,2
-            // stage 3 → level 0,1,2,3
+            // stage 1 → case 0,1
+            // stage 2 → case 0,1,2
+            // stage 3 → case 0,1,2,3
             // stage 4 → 전부
             if (stage >= 4) {
                 filtered.add(s);
