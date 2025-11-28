@@ -205,9 +205,9 @@ public class MainFrame extends JFrame {
     }
     
     // 메인 테스트를 위해 남겨둠
-
+/*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MainFrame::new);
     }
-
+*/
 }
