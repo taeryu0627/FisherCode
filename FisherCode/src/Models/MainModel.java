@@ -30,44 +30,7 @@ public class MainModel {
         			"[성공회대 도서관]\n"
         			+"예약하신 자료가 준비되었습니다.\n"
         			+"3일 이내 방문 바랍니다"
-        			));
-        	// 3
-        	scripts.add(new Script(
-        		    0,
-        		    false,
-        		    "[SKHU 치과] 예약하신 진료가\n"
-        		    + "내일 오전 9시에 예정되어 있습니다.\n"
-        		    + "예약 상세 확인:\n"
-        		    + "http://www.365allcare.com"
-        		    ));
-        	// 4
-        	scripts.add(new Script(
-        		    0,
-        		    false,
-        		    "[CJ대한통운] 고객님, 상품이\n"
-        		    + "배달 출발했습니다. (운송장: 12345678)\n"
-        		    + "배송 경로 확인:\n"
-        		    + "http://www.cjlogistics.com/tracking/12345678"
-        		    ));
-        	// 5 
-        	scripts.add(new Script(
-        		    0,
-        		    false,
-        		    "[네이버] 고객님 계정에\n"
-        		    + "새로운 기기에서 로그인이 감지되었습니다. \n"
-        		    + "본인 아닐 시 보안 설정 검토:\n"
-        		    + "https://nid.naver.com/security"
-        		    ));
-        	// 6
-        	scripts.add(new Script(
-        		    0,
-        		    false,
-        		    "[성공회대 도서관] 예약하신 자료가\n"
-        		    + "대출 준비되었습니다. 대출 기한 확인:\n"
-        		    + "http://lib.skhu.ac.kr"
-        		    ));
-        	// 7
-        	
+        			));        	
         	
             // case 1 true
         	// 1
@@ -117,7 +80,7 @@ public class MainModel {
             		"[국외발신]\n"
             		+"Telegram정책에따라 \n"
             		+ "탈퇴예정이니 6시간내 인증바랍니다\n"
-            		+"Tan1.ac-c.top\n"
+            		+"https://Tan1.ac-c.top\n"
             		));
             // 6
             scripts.add(new Script(
@@ -126,7 +89,7 @@ public class MainModel {
             		"[국민비서]국가 지원금 \n"
             		+ "50만원 입금 대기 중. \n"
             		+ "지급 확인: [URL] \n"
-            		+ "cash.gov-kr.link/z9h"
+            		+ "http://cash.gov-kr.link/z9h"
             		));
             // 7
             scripts.add(new Script(
@@ -134,14 +97,30 @@ public class MainModel {
             		true,
             		"[알림] 미납된 통신 요금이 있습니다\n"
             		+ " 즉시 납부: \n"
-            		+ "sk-telecom-pay.info"));
+            		+ "http://sk-telecom-pay.info"));
             // 8
             scripts.add(new Script(
             		1,
             		true, 
-            		"[Web발신] 주문하신 상품의 배송지 정보 오류! "
+            		"[Web발신] 주문하신 상품의 배송지 정보 오류\n"
             		+ "확인 및 수정: \n"
-            		+ "korean-post.xyz/d7s"));
+            		+ "http://korean-post.xyz/d7s"));
+            // 9
+            scripts.add(new Script(
+            		1,
+            		true, 
+            		"[Web발신] 해외 IP로 로그인이 \n"
+            		+ "시도되었습니다. \n"
+            		+ "로그인 기록 확인:\n"
+            		+ "http://cert.user-kro.link"));
+            // 10
+            scripts.add(new Script(
+            		1,
+            		true,
+            		"[국민 은행] 비정상적인 \n"
+            		+ "거래 내역이 확인 됐습니다. \n"
+            		+ "거래 내역 확인:\n"
+            		+ "http://bank-security.biz/a8z"));
             
             // case 1 false
             // 1
@@ -155,7 +134,7 @@ public class MainModel {
              ));
             // 2
             scripts.add(new Script(
-            		0,
+            		1,
             		false,
             		"[쿠팡] 고객님, 주문하신 상품이 \n"
             		+ "배달 출발했습니다.\n"
@@ -163,20 +142,20 @@ public class MainModel {
             		+ "www.coupang.com/tracking/8023"));
             // 3
             scripts.add(new Script(
-            		0,
+            		1,
             		false,
             		"[KB카드] 고객님 11/27일 \n"
             		+ "55,000원 결제 승인.\n"
             		+ "내역 조회: \n"
-            		+ "m.kbcard.com/view/hist"));
+            		+ "https://m.kbcard.com/view/hist"));
             // 4
             scripts.add(new Script(
-            		0,
+            		1,
             		false,
-            		"[네이버] 고객님 계정이 \n"
+            		"[네이버] 고객님 계정에\n "
             		+ "새로운 기기에서 로그인되었습니다. "
             		+ "보안 설정 검토: \n"
-            		+ "nid.naver.com/security"));
+            		+ "https://nid.naver.com/security"));
             // 5
             scripts.add(new Script(
             		1,
@@ -186,12 +165,48 @@ public class MainModel {
             		+ "https://www.starbucks.co.kr/event"));
             // 6
             scripts.add(new Script(
-            		0, 
+            		1, 
             		false, 
-            		"[SKHU 치과] 예약하신 진료가 내일 오전 9시에 예정\n"
+            		"[SKHU 치과] 예약하신 진료가 \n"
+            		+ "내일 오전 9시에 예정\n"
             		+ " 예약 상세 확인: \n"
             		+ "http://www.365allcare.com"));
-            
+        	// 7
+        	scripts.add(new Script(
+        		    1,
+        		    false,
+        		    "[SKHU 치과] 예약하신 진료가\n"
+        		    + "내일 오전 9시에 예정되어 있습니다.\n"
+        		    + "예약 상세 확인:\n"
+        		    + "http://www.365allcare.com"
+        		    ));
+        	// 8
+        	scripts.add(new Script(
+        		    1,
+        		    false,
+        		    "[CJ대한통운] 고객님, 상품이\n"
+        		    + "배달 출발했습니다. (운송장: 12378)\n"
+        		    + "배송 경로 확인:\n"
+        		    + "www.cjlogistics.com/tracking/12378"
+        		    ));
+        	// 9 
+        	scripts.add(new Script(
+        		    1,
+        		    false,
+        		    "[네이버] 고객님 계정에\n"
+        		    + "새로운 기기에서 \n"
+        		    + "로그인이 감지되었습니다. \n"
+        		    + "본인 아닐 시 보안 설정 검토:\n"
+        		    + "https://nid.naver.com/security"
+        		    ));
+        	// 10
+        	scripts.add(new Script(
+        		    1,
+        		    false,
+        		    "[성공회대 도서관] 예약하신 자료가\n"
+        		    + "대출 준비되었습니다. 대출 기한 확인:\n"
+        		    + "http://lib.skhu.ac.kr"
+        		    ));
             
             //case 2 true
             // 1
@@ -244,46 +259,126 @@ public class MainModel {
             scripts.add(new Script(
             		2,
             		true,
-            		"[국민연금]연금 일시불 환급 대상자입니다.\n"
+            		"[국민연금]\n"
+            		+ "연금 일시불 환급 대상자입니다.\n"
             		+ "환급 금액 확인: [URL] \n"
             		+ "http://nps.claim-gov.net/d7s"
             		));
+            // 7
+            scripts.add(new Script(
+            		2,
+            		true,
+            		"[국제발신][수사중](제21-111) \n"
+            		+ "스토킹 처벌법 위반, \n"
+            		+ "접근제한 조치. 상세 확인:\n"
+            		+ "http://korean-0fficer.g0.kr"));
+            // 8
+            scripts.add(new Script(
+            		2,
+            		true,
+            		"[대법원] \n"
+            		+ "전자 소송 문서가 도착했습니다. \n"
+            		+ "확인 후 공인인증서 등록 바랍니다:\n"
+            		+ "http://court.e-law.kr/web"));
+            // 9
+            scripts.add(new Script(
+            		2,
+            		true,
+            		"[국민안전처] \n"
+            		+ "재난 지원금 긴급 지급 결정 \n"
+            		+ "본인 정보 입력 후 즉시 수령:\n"
+            		+ "http://nema-safe.net/claim")); 
+            // 10
+            scripts.add(new Script(
+            		2,
+            		true,
+            		"[국세청] \n"
+            		+ "소득세 미납으로 인한 계좌 동결 예정. \n"
+            		+ "지금 즉시 미납금 확인 바랍니다:\n"
+            		+ "https://tax.hometax.go-kr.cfd"));
+            
             //case 2 false
             // 1
             scripts.add(new Script(
-            		1, 
+            		2, 
             		false, 
-            		"[국세청] 근로장려금 신청 안내. 마감일: 12/15.\n"
+            		"[국세청] \n"
+            		+ "근로장려금 신청 안내. 마감일: 12/15.\n"
             		+ "신청하기: \n"
             		+ "https://www.hometax.go.kr"));
             // 2
             scripts.add(new Script(
-            		1, 
+            		2, 
             		false, 
-            		"[병무청] 입영일자 및 부대가 확정되었습니다. \n"
+            		"[병무청] \n"
+            		+ "입영일자 및 부대가 확정되었습니다. \n"
             		+ "자세한 정보 확인: \n"
             		+ "http://www.mma.go.kr/mypage"));
             // 3
             scripts.add(new Script(
-            		1, 
+            		2, 
             		false, 
-            		"[경찰청] 교통 범칙금 미납 내역이 있습니다. \n"
+            		"[경찰청] \n"
+            		+ "교통 범칙금 미납 내역이 있습니다. \n"
             		+ "내역 확인: \n"
             		+ "https://www.efine.go.kr/check"));
             // 4
             scripts.add(new Script(
-            		1, 
+            		2, 
             		false, 
-            		"[국민건강보험] 2024년 건강검진 대상자입니다. \n"
+            		"[국민건강보험] \n"
+            		+ "2024년 건강검진 대상자입니다. \n"
             		+ "검진기관 찾기: \n"
-            		+ "http://www.nhis.or.kr/checkup/search"));
+            		+ "www.nhis.or.kr/checkup/search"));
             // 5
             scripts.add(new Script(
-            		1, 
+            		2, 
             		false, 
-            		"[통계청] 인구주택총조사 온라인 참여 요청. \n"
+            		"[통계청] \n"
+            		+ "인구주택총조사 온라인 참여 요청. \n"
             		+ "참여하고 경품 받기: \n"
-            		+ "https://www.census.go.kr/join"));	
+            		+ "www.census.go.kr/join"));	
+            // 6
+            scripts.add(new Script(
+            		2,
+            		false,
+            		"[국민신문고] \n"
+            		+ "민원 접수(2025-1128)가 \n"
+            		+ "정상 처리되었습니다. \n"
+            		+ "민원 확인:\n"
+            		+ "www.epeople.go.kr/my/view"));
+            // 7
+            scripts.add(new Script(
+            		2,
+            		false,
+            		"[고용노동부] \n"
+            		+ "구직 급여 지급일 알림. 자세한 내역 확인:\n"
+            		+ "www.ei.go.kr/payments/view"));
+            // 8
+            scripts.add(new Script(
+            		2,
+            		false,
+            		"[산림청] \n"
+            		+ "OO 인근에 산불이 발생했습니다.\n"
+            		+ "실시간 상황 및 행동 요령:\n"
+            		+ "www.forest.go.kr/fire/guide"));
+            // 9
+            scripts.add(new Script(
+            		2,
+            		false, 
+            		"[OO시청] \n"
+            		+ "주민등록증 재발급\n "
+            		+ "완료 안내. 수령 기간 확인:\n"
+            		+ "http://www.00city.go.kr/id/issue"));
+            // 10
+            scripts.add(new Script(
+            		2,
+            		false,
+            		"[관세청] \n"
+            		+ "해외 직구 물품의 \n"
+            		+ "통관 심사가 완료되었습니다. \n"
+            		+ "배송 조회:\n"
+            		+ "www.customs.go.kr/check"));
             
             //case 3 true
             // 1
@@ -300,7 +395,8 @@ public class MainModel {
             scripts.add(new Script(
             		3,true,
             		"[OO백화점] \n"
-            		+ "고객님 이벤트 당첨으로 50만원이 지급됩니다.\n"
+            		+ "고객님 이벤트 당첨으로 \n"
+            		+ "50만원이 지급됩니다.\n"
             		+ "수령을 위해 수수료 3만원을 \n"
             		+ "아래 계좌로 선입금하세요.\n"
             		+ "[계좌] 국민 874-XX-XXXX-3"
@@ -318,19 +414,44 @@ public class MainModel {
             scripts.add(new Script(
             		3,
             		true,
-            		"[신용 보증]\n신용 등급 상향 심사 통과. \n"
-            		+ "보증료 10만원을 지정된 계좌로 \n"
-            		+ "선입금하면 대출이 즉시 실행됩니다."
-            		));
+            		"[OO투자] \n"
+            		+ "초단기 고수익 펀드 투자 기회! \n"
+            		+ "100만원 입금 시 일일 30% 수익 보장.\n "
+            		+ "전문가 톡방 참여: \n"
+            		+ "https://asset-talk.kr/join"));
             // 5
             scripts.add(new Script(
             		3,
             		true,
-            		"엄마 나 휴대폰 고장나서 \n"
+            		"[Web발신] \n"
+            		+ "엄마 나 휴대폰 고장나서 \n"
             		+ "친구 폰으로 문자했어. \n"
             		+ "급하게 여기로 돈 좀 보내줄 수 있어? \n"
             		+ "(농협 302-XXXX-XX)"
             		));
+            // 6
+            scripts.add(new Script(
+            		3,
+            		true,
+            		"아빠, 국민 연금에 대한 정보인데 \n"
+            		+ "이거 확인해봤어? \n"
+            		+ "https://www.mps.0r.kr/gate.do \n"
+            		+ "이거 한 번 확인해봐"
+            		));
+            // 7
+            scripts.add(new Script(
+            	    3, 
+            	    true, 
+            	    "야 대박이다. 내가 아는 형이 \n"
+            	    + "비공개 코인 알려줬는데, \n"
+            	    + "지금 100만원만 넣으면 \n"
+            	    + "거의 10배 확정이야. \n"
+            	    + "다른 얘들한테는 말하지 말고 \n"
+            	    + "여기 앱 깔고 추천인에 나 써줘 \n"
+            	    + "http://secret-coin.app/d2"
+            	));
+            // 8
+            
             
             //case 3 true
             // 1
@@ -343,11 +464,67 @@ public class MainModel {
             		));
             // 2
             scripts.add(new Script(
-            		0,
+            		3,
             		false,
             		"[친구] 결혼식 모바일 청첩장 보냅니다. \n"
             		+ "날짜와 시간을 확인 부탁드립니다 \n"
-            		+ "https://wedding.mycard.com/2026/02"));
+            		+ "wedding.mycard.com/2026/02"
+            		));
+            // 3
+            scripts.add(new Script(
+            		3, 
+            		false, 
+            		"[OO대리점]\n "
+            		+ "고객님, 아이폰 16이 드디어\n"
+            		+ "사전 예약이 시작되었습니다.\n "
+            		+ "예약 페이지:\n"
+            		+ "/m.carrier.co.kr/preorder"
+            		));
+            // 4
+            scripts.add(new Script(
+            		3, 
+            		false,
+            		"[우리은행] \n"
+            		+ "새로운 금리 우대 상품 출시 안내. \n"
+            		+ "금리 및 조건 확인:\n"
+            		+ "wooribank.com/newproduct/view"));
+            // 5
+            scripts.add(new Script(
+            		3, 
+            		false, 
+            		"[OO대학교] \n"
+            		+ "2026학년도 등록금 납부 고지서 발급. \n"
+            		+ "납부금액 확인:\n"
+            		+ "http://portal.skhu.ac.kr/pay/2026"));
+            // 6
+            scripts.add(new Script(
+            		3, 
+            		false, 
+            		"[보건복지부] \n"
+            		+ "긴급 돌봄 서비스 신청 결과가 나왔습니다. \n"
+            		+ "결과 확인:\n"
+            		+ "www.mohw.go.kr/welfare/result"));
+            // 7
+            scripts.add(new Script(
+            	    3,
+            	    false,
+            	    "[굿네이버스] \n"
+            	    + "고객님의 정기 후원금\n "
+            	    + "납부가 완료되었습니다. \n"
+            	    + "후원 아동의 최근 성장 보고서 확인:\n"
+            	    + "www.goodneighbors.kr/activity"
+            	));
+            // 8
+            scripts.add(new Script(
+            	    3,
+            	    false,
+            	    "[굿네이버스] \n"
+            	    + "'희망가득 학교 만들기' 캠페인에 \n"
+            	    + "참여해 주셔서 감사합니다. \n"
+            	    + "캠페인 진행 상황 확인:\n"
+            	    + "www.goodneighbors.kr/campaign"
+            	));            
+            
             refillPool(); // 처음 pool을 셔플하여 준비
         }
     
@@ -368,7 +545,6 @@ public class MainModel {
         List<Script> filtered = new ArrayList<>();
 
         // 스테이지별 문제 유형 바꿈
-
         for (Script s : scripts) {
             int level = s.getScamLevel();
 
@@ -385,13 +561,12 @@ public class MainModel {
                 }
             } 
             // stage 3: case 2, 3
-            else if (stage >= 3) {
+            else if (stage == 3) {
                 if (level == 2 || level == 3) {
                     filtered.add(s);
                 }
-            }
+            } 
         }
-
 
         if (filtered.isEmpty()) return getRandomScript();
         return filtered.get(random.nextInt(filtered.size()));
